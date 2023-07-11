@@ -1,79 +1,119 @@
-import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TextInput } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-// Create a stack navigator
-const Stack = createStackNavigator();
+const HomeScreen = () => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.headerText}>Open up App.js to start working on your app!</Text>
+      <StatusBar style="auto" />
+    </View>
+  );
+};
 
-// Screen components for each icon
-const Screen1 = () => (
-  <View style={styles.screenContainer}>
-    <Text>Screen 1</Text>
-  </View>
-);
-const Screen2 = () => (
-  <View style={styles.screenContainer}>
-    <Text>Screen 2</Text>
-  </View>
-);
-const Screen3 = () => (
-  <View style={styles.screenContainer}>
-    <Text>Screen 3</Text>
-  </View>
-);
-const Screen4 = () => (
-  <View style={styles.screenContainer}>
-    <Text>Screen 4</Text>
-  </View>
-);
-const Screen5 = () => (
-  <View style={styles.screenContainer}>
-    <Text>Screen 5</Text>
-  </View>
-);
+const Screen1 = () => {
+  return (
+    <View style={styles.screenContainer}>
+      <Text style={styles.screenText}>Screen 1</Text>
+    </View>
+  );
+};
 
-export default function App() {
-  const [selectedIcon, setSelectedIcon] = useState(0);
+const Screen2 = () => {
+  const [searchText, setSearchText] = useState('');
 
-  const handleIconPress = (index) => {
-    setSelectedIcon(index);
+  const handleSearch = () => {
+    // Handle search functionality here
+    console.log('Search Text:', searchText);
   };
 
   return (
-    <NavigationContainer>
-      <View style={styles.container}>
-        {/* Main content of the app */}
-        <View style={styles.mainContent}>
-          {selectedIcon === 0 && <Screen1 />}
-          {selectedIcon === 1 && <Screen2 />}
-          {selectedIcon === 2 && <Screen3 />}
-          {selectedIcon === 3 && <Screen4 />}
-          {selectedIcon === 4 && <Screen5 />}
-        </View>
-
-        {/* Bottom section bar */}
-        <View style={styles.bottomBar}>
-          <TouchableOpacity style={styles.icon} onPress={() => handleIconPress(0)}>
-            <Text style={selectedIcon === 0 ? styles.selectedIconText : styles.iconText}>Icon 1</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.icon} onPress={() => handleIconPress(1)}>
-            <Text style={selectedIcon === 1 ? styles.selectedIconText : styles.iconText}>Icon 2</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.icon} onPress={() => handleIconPress(2)}>
-            <Text style={selectedIcon === 2 ? styles.selectedIconText : styles.iconText}>Icon 3</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.icon} onPress={() => handleIconPress(3)}>
-            <Text style={selectedIcon === 3 ? styles.selectedIconText : styles.iconText}>Icon 4</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.icon} onPress={() => handleIconPress(4)}>
-            <Text style={selectedIcon === 4 ? styles.selectedIconText : styles.iconText}>Icon 5</Text>
-          </TouchableOpacity>
-        </View>
-
-        <StatusBar style="auto" />
+    <View style={styles.screenContainer}>
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Type here to search"
+          value={searchText}
+          onChangeText={setSearchText}
+          onSubmitEditing={handleSearch}
+        />
       </View>
+      <Text style={styles.screenText}>Screen 2</Text>
+    </View>
+  );
+};
+
+const Screen3 = () => {
+  return (
+    <View style={styles.screenContainer}>
+      <Text style={styles.screenText}>Screen 3</Text>
+    </View>
+  );
+};
+
+const Screen4 = () => {
+  return (
+    <View style={styles.screenContainer}>
+      <Text style={styles.screenText}>Screen 4</Text>
+    </View>
+  );
+};
+
+const Tab = createBottomTabNavigator();
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <MaterialCommunityIcons name="home" color={color} size={26} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Screen1"
+          component={Screen1}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <MaterialCommunityIcons name="numeric-1" color={color} size={26} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Screen2"
+          component={Screen2}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <MaterialCommunityIcons name="numeric-2" color={color} size={26} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Screen3"
+          component={Screen3}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <MaterialCommunityIcons name="numeric-3" color={color} size={26} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Screen4"
+          component={Screen4}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <MaterialCommunityIcons name="numeric-4" color={color} size={26} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
@@ -85,35 +125,31 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  mainContent: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  bottomBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    height: 50,
-    borderTopWidth: 1,
-    borderTopColor: '#ccc',
-  },
-  icon: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  iconText: {
-    color: '#333',
-  },
-  selectedIconText: {
-    color: 'blue',
-    fontWeight: 'bold',
+  headerText: {
+    fontSize: 20,
   },
   screenContainer: {
     flex: 1,
-    justifyContent: 'center',
+    backgroundColor: '#fff',
     alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: 50,
+  },
+  screenText: {
+    fontSize: 20,
+  },
+  searchContainer: {
+    width: '100%',
+    paddingHorizontal: 20,
+    marginBottom: 20,
+  },
+  searchInput: {
+    width: '100%',
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
   },
 });
 
