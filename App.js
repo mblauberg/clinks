@@ -1,28 +1,100 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { 
+  Layout, 
+  Text, 
+  Input, 
+  Button, 
+  Icon, 
+  IconRegistry, 
+  ApplicationProvider, 
+  BottomNavigation, 
+  BottomNavigationTab 
+} from '@ui-kitten/components';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { createStackNavigator } from '@react-navigation/stack';
+import * as eva from "@eva-design/eva";
+import { EvaIconsPack } from '@ui-kitten/eva-icons';
+import { default as theme } from "./theme.json";
 
+
+
+// Homescreen
 const HomeScreen = () => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.headerText}>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Layout style={homeStyles.container}>
+      <Layout style={homeStyles.searchContainer}>
+        <Input
+          style={homeStyles.searchInput}
+          placeholder="Search..."
+        />
+        <Button style={homeStyles.filterButton}>
+          Filter
+        </Button>
+      </Layout>
+      <Text>
+        Open up App.js to start working on your app!
+      </Text>
+    </Layout>
   );
 };
 
-const Screen1 = () => {
+const homeStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  searchInput: {
+    flex: 1,
+    height: 40,
+    marginRight: 8,
+  },
+  filterButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
+  },
+  filterButtonText: {
+    fontWeight: 'bold',
+  },
+  headerText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+});
+
+// Safety Page
+const SafetyScreen = () => {
   return (
-    <View style={styles.screenContainer}>
-      <Text style={styles.screenText}>Screen 1</Text>
-    </View>
+    <Layout style={safetyStyles.screenContainer}>
+      <Text style={safetyStyles.screenText}>Screen 1</Text>
+    </Layout>
   );
 };
 
-const Screen2 = () => {
+const safetyStyles = StyleSheet.create({
+  screenContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: 50,
+  },
+  screenText: {
+    fontSize: 20,
+  },
+});
+
+// Account Page
+const AccountScreen = () => {
   const [searchText, setSearchText] = useState('');
 
   const handleSearch = () => {
@@ -31,106 +103,24 @@ const Screen2 = () => {
   };
 
   return (
-    <View style={styles.screenContainer}>
-      <View style={styles.searchContainer}>
-        <TextInput
-          style={styles.searchInput}
+    <Layout style={accountStyles.screenContainer}>
+      <Layout style={accountStyles.searchContainer}>
+        <Input
+          style={accountStyles.searchInput}
           placeholder="Type here to search"
           value={searchText}
           onChangeText={setSearchText}
           onSubmitEditing={handleSearch}
         />
-      </View>
-      <Text style={styles.screenText}>Screen 2</Text>
-    </View>
+      </Layout>
+      <Text style={accountStyles.screenText}>Screen 2</Text>
+    </Layout>
   );
 };
 
-const Screen3 = () => {
-  return (
-    <View style={styles.screenContainer}>
-      <Text style={styles.screenText}>Screen 3</Text>
-    </View>
-  );
-};
-
-const Screen4 = () => {
-  return (
-    <View style={styles.screenContainer}>
-      <Text style={styles.screenText}>Screen 4</Text>
-    </View>
-  );
-};
-
-const Tab = createBottomTabNavigator();
-
-export default function App() {
-  return (
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="home" color={color} size={26} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Screen1"
-          component={Screen1}
-          options={{
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="numeric-1" color={color} size={26} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Screen2"
-          component={Screen2}
-          options={{
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="numeric-2" color={color} size={26} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Screen3"
-          component={Screen3}
-          options={{
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="numeric-3" color={color} size={26} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Screen4"
-          component={Screen4}
-          options={{
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="numeric-4" color={color} size={26} />
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  headerText: {
-    fontSize: 20,
-  },
+const accountStyles = StyleSheet.create({
   screenContainer: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingTop: 50,
@@ -138,19 +128,169 @@ const styles = StyleSheet.create({
   screenText: {
     fontSize: 20,
   },
-  searchContainer: {
-    width: '100%',
-    paddingHorizontal: 20,
-    marginBottom: 20,
-  },
-  searchInput: {
-    width: '100%',
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
+});
+
+// Bottom Tab Navigator
+const PersonIcon = (props) => (
+  <Icon
+    {...props}
+    name='person-outline'
+  />
+);
+
+const PulseIcon = (props) => (
+  <Icon {...props} name='bell-outline'/>
+);
+
+const AccountIcon = (props) => (
+  <Icon
+    {...props}
+    name='email-outline'
+  />
+);
+
+
+const App = () => {
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+
+  const onSelect = (index) => {
+    setSelectedIndex(index);
+  };
+
+  const renderScreen = () => {
+    switch (selectedIndex) {
+      case 0:
+        return <HomeScreen />;
+      case 1:
+        return <SafetyScreen />;
+      case 2:
+        return <AccountScreen />;
+    }
+  };
+
+  return (
+    <>
+      <IconRegistry icons={EvaIconsPack} />
+      <ApplicationProvider {...eva} theme={eva.dark}>
+        {renderScreen()}
+        <BottomNavigation
+          style={styles.bottomNavigation}
+          selectedIndex={selectedIndex}
+          onSelect={onSelect}
+        >
+          <BottomNavigationTab
+            title="HOME"
+            icon={PersonIcon}
+          />
+          <BottomNavigationTab
+            title="SAFETY"
+            icon={PulseIcon}
+          />
+          <BottomNavigationTab
+            title="ACCOUNT"
+            icon={AccountIcon}
+          />
+        </BottomNavigation>
+      </ApplicationProvider>
+    </>
+  );
+};
+
+const styles = StyleSheet.create({
+  bottomNavigation: {
+    marginVertical: 8,
   },
 });
 
+export default App;
 
+
+// App
+// const App = () => {
+//   return (
+//     <>
+//       <IconRegistry icons={EvaIconsPack} />
+//       <ApplicationProvider {...eva} theme={{ ...eva.dark, ...theme }}>
+//         <NavigationContainer>
+//           <Tab.Navigator
+//             initialRouteName="Home"
+//           >
+//             <Tab.Screen
+//               name="Home"
+//               component={HomeScreen}
+//               options={{
+//                 tabBarLabel: 'Home',
+//                 tabBarIcon: PersonIcon,
+//               }}
+//             />
+//             <Tab.Screen
+//               name="Safety"
+//               component={SafetyScreen}
+//               options={{
+//                 tabBarLabel: 'Safety',
+//                 tabBarIcon: PulseIcon,
+//               }}
+//             />
+//             <Tab.Screen
+//               name="Account"
+//               component={AccountScreen}
+//               options={{
+//                 tabBarLabel: 'Account',
+//                 tabBarIcon: AccountIcon,
+//               }}
+//             />
+//           </Tab.Navigator>
+//         </NavigationContainer>
+//       </ApplicationProvider>
+//     </>
+//   );  
+// };
+
+
+
+
+// Bottom tab
+// const Tab = createBottomTabNavigator();
+
+// App
+// export default function App() {
+//   return (
+//     <ApplicationProvider
+//     mapping={mapping}
+//     theme={theme === 'light' ? lightTheme : darkTheme}
+//     >
+//       <NavigationContainer>
+//         <Tab.Navigator>
+//           <Tab.Screen
+//             name="Home"
+//             component={HomeScreen}
+//             options={{
+//               tabBarIcon: ({ color }) => (
+//                 <Icon name="home-outline" fill={color} style={{ width: 26, height: 26 }} />
+//               ),
+//             }}
+//           />
+//           <Tab.Screen
+//             name="Safety"
+//             component={Safety}
+//             options={{
+//               tabBarIcon: ({ color }) => (
+//                 <Icon name="activity-outline" fill={color} style={{ width: 26, height: 26 }} />
+//               ),
+//             }}
+//           />
+//           <Tab.Screen
+//             name="Account"
+//             component={Account}
+//             options={{
+//               tabBarIcon: ({ color }) => (
+//                 <Icon name="person-outline" fill={color} style={{ width: 26, height: 26 }} />
+//               ),
+//             }}
+//           />
+            
+//         </Tab.Navigator>
+//       </NavigationContainer>
+//     </ApplicationProvider>
+//   );
+// }
