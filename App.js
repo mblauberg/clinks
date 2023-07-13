@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { 
   Layout, 
   Text, 
@@ -11,9 +13,6 @@ import {
   BottomNavigation, 
   BottomNavigationTab 
 } from '@ui-kitten/components';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
 import * as eva from "@eva-design/eva";
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { default as theme } from "./theme.json";
@@ -131,21 +130,21 @@ const accountStyles = StyleSheet.create({
 });
 
 // Bottom Tab Navigator
-const PersonIcon = (props) => (
+const HomeIcon = (props) => (
   <Icon
     {...props}
-    name='person-outline'
+    name='home'
   />
 );
 
 const PulseIcon = (props) => (
-  <Icon {...props} name='bell-outline'/>
+  <Icon {...props} name='activity'/>
 );
 
 const AccountIcon = (props) => (
   <Icon
     {...props}
-    name='email-outline'
+    name='person'
   />
 );
 
@@ -180,7 +179,7 @@ const App = () => {
         >
           <BottomNavigationTab
             title="HOME"
-            icon={PersonIcon}
+            icon={HomeIcon}
           />
           <BottomNavigationTab
             title="SAFETY"
@@ -198,7 +197,6 @@ const App = () => {
 
 const styles = StyleSheet.create({
   bottomNavigation: {
-    marginVertical: 8,
   },
 });
 
