@@ -93,26 +93,54 @@ const safetyStyles = StyleSheet.create({
 });
 
 // Account Page
-const AccountScreen = () => {
-  const [searchText, setSearchText] = useState('');
+const LoginScreen = () => {
+  // if not logged in:
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const login = () => {
+    // login logic here
 
-  const handleSearch = () => {
-    // Handle search functionality here
-    console.log('Search Text:', searchText);
+    // if successful:
+    // navigate to account page
+
   };
 
   return (
+    <Layout style={loginStyles.screenContainer}>
+            <Input
+        placeholder='Email'
+        value={email}
+        onChangeText={nextValue => setEmail(nextValue)}
+      />
+      <Input
+        placeholder='Password'
+        value={password}
+        onChangeText={nextValue => setPassword(nextValue)}
+      />
+      <Button onPress={login}>Login</Button>
+    </Layout>
+  );
+};
+
+
+const AccountScreen = () => {  
+  // if not logged in:
+  return <LoginScreen />;
+  // if logged in:
+  const logout = () => {
+    // logout logic here
+
+    // if successful:
+    // navigate to login page
+  };
+  return (
     <Layout style={accountStyles.screenContainer}>
-      <Layout style={accountStyles.searchContainer}>
-        <Input
-          style={accountStyles.searchInput}
-          placeholder="Type here to search"
-          value={searchText}
-          onChangeText={setSearchText}
-          onSubmitEditing={handleSearch}
-        />
-      </Layout>
-      <Text style={accountStyles.screenText}>Screen 2</Text>
+// show account info including: profile picture, name, email, phone number and an edit account button
+// show settings button, which will take you to a settings page
+// show help button, which will take you to a help page
+// show logout button, which will log you out and take you to the login/signup page
+      <Text style={accountStyles.screenText}>Account Screen</Text>
+      <Button onPress={logout}>Logout</Button>
     </Layout>
   );
 };
@@ -128,6 +156,63 @@ const accountStyles = StyleSheet.create({
     fontSize: 20,
   },
 });
+
+const loginStyles = StyleSheet.create({
+  screenContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: 50,
+  },
+  screenText: {
+    fontSize: 20,
+  },
+});
+
+const SettingsScreen = () => {
+  return (
+    <Layout style={settingsStyles.screenContainer}>
+      <Text style={settingsStyles.screenText}>Screen 3</Text>
+    </Layout>
+  );
+};
+
+const settingsStyles = StyleSheet.create({
+  screenContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: 50,
+  },
+  screenText: {
+    fontSize: 20,
+  },
+});
+
+const HelpScreen = () => {
+  return (
+    <Layout style={helpStyles.screenContainer}>
+      <Text style={helpStyles.screenText}>Screen 4</Text>
+    </Layout>
+  );
+};
+
+const helpStyles = StyleSheet.create({
+  screenContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: 50,
+  },
+  screenText: {
+    fontSize: 20,
+  },
+});
+
+
+
+
+
 
 // Bottom Tab Navigator
 const HomeIcon = (props) => (
@@ -163,7 +248,9 @@ const App = () => {
       case 1:
         return <SafetyScreen />;
       case 2:
+      // return account screen if logged in, otherwise return login screen
         return <AccountScreen />;
+
     }
   };
 
@@ -200,95 +287,5 @@ const styles = StyleSheet.create({
   },
 });
 
+
 export default App;
-
-
-// App
-// const App = () => {
-//   return (
-//     <>
-//       <IconRegistry icons={EvaIconsPack} />
-//       <ApplicationProvider {...eva} theme={{ ...eva.dark, ...theme }}>
-//         <NavigationContainer>
-//           <Tab.Navigator
-//             initialRouteName="Home"
-//           >
-//             <Tab.Screen
-//               name="Home"
-//               component={HomeScreen}
-//               options={{
-//                 tabBarLabel: 'Home',
-//                 tabBarIcon: PersonIcon,
-//               }}
-//             />
-//             <Tab.Screen
-//               name="Safety"
-//               component={SafetyScreen}
-//               options={{
-//                 tabBarLabel: 'Safety',
-//                 tabBarIcon: PulseIcon,
-//               }}
-//             />
-//             <Tab.Screen
-//               name="Account"
-//               component={AccountScreen}
-//               options={{
-//                 tabBarLabel: 'Account',
-//                 tabBarIcon: AccountIcon,
-//               }}
-//             />
-//           </Tab.Navigator>
-//         </NavigationContainer>
-//       </ApplicationProvider>
-//     </>
-//   );  
-// };
-
-
-
-
-// Bottom tab
-// const Tab = createBottomTabNavigator();
-
-// App
-// export default function App() {
-//   return (
-//     <ApplicationProvider
-//     mapping={mapping}
-//     theme={theme === 'light' ? lightTheme : darkTheme}
-//     >
-//       <NavigationContainer>
-//         <Tab.Navigator>
-//           <Tab.Screen
-//             name="Home"
-//             component={HomeScreen}
-//             options={{
-//               tabBarIcon: ({ color }) => (
-//                 <Icon name="home-outline" fill={color} style={{ width: 26, height: 26 }} />
-//               ),
-//             }}
-//           />
-//           <Tab.Screen
-//             name="Safety"
-//             component={Safety}
-//             options={{
-//               tabBarIcon: ({ color }) => (
-//                 <Icon name="activity-outline" fill={color} style={{ width: 26, height: 26 }} />
-//               ),
-//             }}
-//           />
-//           <Tab.Screen
-//             name="Account"
-//             component={Account}
-//             options={{
-//               tabBarIcon: ({ color }) => (
-//                 <Icon name="person-outline" fill={color} style={{ width: 26, height: 26 }} />
-//               ),
-//             }}
-//           />
-            
-//         </Tab.Navigator>
-//       </NavigationContainer>
-//     </ApplicationProvider>
-//   );
-// }
