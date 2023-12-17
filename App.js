@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { StyleSheet, View } from 'react-native';
 import { 
   Layout, 
   Text, 
@@ -11,7 +9,10 @@ import {
   IconRegistry, 
   ApplicationProvider, 
   BottomNavigation, 
-  BottomNavigationTab 
+  BottomNavigationTab,
+  Avatar,
+  Divider,
+  ListItem,
 } from '@ui-kitten/components';
 import * as eva from "@eva-design/eva";
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
@@ -92,7 +93,79 @@ const safetyStyles = StyleSheet.create({
   },
 });
 
-// Account Page
+// Account Screen
+const AccountScreen = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+
+  const login = () => {
+    // login logic here
+    // if successful:
+    setIsLoggedIn(true);
+  };
+
+  const logout = () => {
+    // logout logic here
+    setIsLoggedIn(false);
+  };
+
+  if (!isLoggedIn) {
+    return <LoginScreen onLogin={login} />;
+  }
+
+  const renderItemAccessory = (style, iconName) => (
+    <Icon {...style} name={iconName} />
+  );
+
+  const renderItem = (title, iconName) => (
+    <ListItem
+      title={title}
+      accessoryLeft={(props) => renderItemAccessory(props, iconName)}
+    />
+  );
+
+  return (
+    <Layout style={accountStyles.container}>
+      <View style={accountStyles.headerContainer}>
+        <Avatar size='large' />
+        <Text category='h1'>Michael Blauberg</Text>
+      </View>
+      <Layout style={accountStyles.contentContainer}>
+        <Button style={accountStyles.button} appearance='ghost' accessoryLeft={<Icon name='heart' />}>
+          Favourites
+        </Button>
+        <Button style={accountStyles.button} appearance='ghost' accessoryLeft={<Icon name='gift' />}>
+          Refer a friend
+        </Button>
+        <Button style={accountStyles.button} appearance='ghost' accessoryLeft={<Icon name='bulb' />}>
+          Submit a venue
+        </Button>
+        <Divider />
+        {renderItem('Help', 'question-mark-circle')}
+        {renderItem('Settings', 'settings')}
+      </Layout>
+      <Button onPress={logout}>Logout</Button>
+    </Layout>
+  );
+};
+
+const accountStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  headerContainer: {
+    alignItems: 'center',
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+  },
+  contentContainer: {
+    flex: 1,
+    padding: 10,
+  },
+  button: {
+    marginVertical: 2,
+  },
+});
+
 const LoginScreen = () => {
   // if not logged in:
   const [email, setEmail] = useState('');
@@ -107,7 +180,7 @@ const LoginScreen = () => {
 
   return (
     <Layout style={loginStyles.screenContainer}>
-            <Input
+      <Input
         placeholder='Email'
         value={email}
         onChangeText={nextValue => setEmail(nextValue)}
@@ -121,41 +194,6 @@ const LoginScreen = () => {
     </Layout>
   );
 };
-
-
-const AccountScreen = () => {  
-  // if not logged in:
-  return <LoginScreen />;
-  // if logged in:
-  const logout = () => {
-    // logout logic here
-
-    // if successful:
-    // navigate to login page
-  };
-  return (
-    <Layout style={accountStyles.screenContainer}>
-// show account info including: profile picture, name, email, phone number and an edit account button
-// show settings button, which will take you to a settings page
-// show help button, which will take you to a help page
-// show logout button, which will log you out and take you to the login/signup page
-      <Text style={accountStyles.screenText}>Account Screen</Text>
-      <Button onPress={logout}>Logout</Button>
-    </Layout>
-  );
-};
-
-const accountStyles = StyleSheet.create({
-  screenContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    paddingTop: 50,
-  },
-  screenText: {
-    fontSize: 20,
-  },
-});
 
 const loginStyles = StyleSheet.create({
   screenContainer: {
@@ -212,9 +250,7 @@ const helpStyles = StyleSheet.create({
 
 
 
-
-
-// Bottom Tab Navigator
+// Bottom Tab Navigator Icons
 const HomeIcon = (props) => (
   <Icon
     {...props}
@@ -233,15 +269,17 @@ const AccountIcon = (props) => (
   />
 );
 
-
+// Change screen based on selected tab
 const App = () => {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   const onSelect = (index) => {
+    console.log('onSelect called with index:', index);
     setSelectedIndex(index);
   };
 
   const renderScreen = () => {
+    console.log('renderScreen called with selectedIndex:', selectedIndex);
     switch (selectedIndex) {
       case 0:
         return <HomeScreen />;
