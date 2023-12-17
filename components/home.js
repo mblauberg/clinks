@@ -1,34 +1,62 @@
-import React from 'react';
-import { StyleSheet, SafeAreaView } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, 
+    SafeAreaView, 
+    View, 
+    Text, 
+    TouchableOpacity, 
+} from 'react-native';
 import { 
   Layout, 
   Input, 
   Button,
   Divider,
   TopNavigation,
+  Icon,
 } from '@ui-kitten/components';
 
+const FilterIcon = (props) => (
+    <TouchableOpacity onPress={props.onPress}>
+      <Icon {...props} name='options-2' />
+    </TouchableOpacity>
+  );
 
 export const HomeScreen = ({ navigation}) => {
     
+    const [isFilterVisible, setIsFilterVisible] = useState(false);
+
+    const toggleFilter = () => {
+      setIsFilterVisible(!isFilterVisible);
+    };
+
     const navigateDetails = () => {
         navigation.navigate('Details');
     };
 
+    const navigateVenue = () => {
+        navigation.navigate('Venue');
+    }
+
+
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <TopNavigation title='Clinks' alignment='center'/>
-            <Divider/>
             <Layout style={homeStyles.container}>
-                <Input
-                    style={homeStyles.searchInput}
-                    placeholder="Search..."
-                />
-                <Button style={homeStyles.filterButton}>
-                    Filter
-                </Button>
-                <Divider/>
-                <Button onPress={navigateDetails}>OPEN DETAILS</Button>
+                <View style={homeStyles.searchContainer}>
+                    <Input
+                        style={homeStyles.searchInput}
+                        placeholder="Search..."
+                        accessoryRight={(props) => <FilterIcon {...props} onPress={toggleFilter} />}
+                    />
+                    {isFilterVisible && (
+                        <View style={homeStyles.filterContainer}>
+                            {/* Add your filter options here */}
+                            <Text>Filter options...</Text>
+                        </View>
+                    )}
+                </View>
+                <Button style={homeStyles.button} onPress={navigateVenue}>VENUE</Button>
+                <Button style={homeStyles.button} onPress={navigateDetails}>OPEN DETAILS</Button>
             </Layout>
         </SafeAreaView>
     );
@@ -37,31 +65,25 @@ export const HomeScreen = ({ navigation}) => {
 const homeStyles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        paddingVertical: 16,
         paddingHorizontal: 16,
+        flexDirection: 'column',
     },
     searchContainer: {
-        flexDirection: 'row',
+        flexDirection: 'column',
         alignItems: 'center',
         marginBottom: 16,
     },
     searchInput: {
-        flex: 1,
         height: 40,
         marginRight: 8,
     },
-    filterButton: {
+    filterContainer: {
+        padding: 10,
+    },
+    button: {
+        marginVertical: 8,
         paddingHorizontal: 12,
         paddingVertical: 8,
-        borderRadius: 8,
-    },
-    filterButtonText: {
-        fontWeight: 'bold',
-    },
-    headerText: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 16,
     },
 });

@@ -22,27 +22,26 @@ export const AccountScreen = () => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <TopNavigation title='Account' alignment='center'/>
             <Divider/>
             <Layout style={accountStyles.container}>
                 <View style={accountStyles.headerContainer}>
-                <Avatar size='large' />
-                <Text category='h1'>Michael Blauberg</Text>
+                    <Avatar source={require('../assets/account.png')} style={accountStyles.avatar} size='giant' />
+                    <Text category='h1'>Michael Blauberg </Text>
                 </View>
                 <Layout style={accountStyles.contentContainer}>
-                    <Button style={accountStyles.button} appearance='ghost' accessoryLeft={<Icon name='heart' />}>
+                    <Button style={accountStyles.button} accessoryLeft={<Icon name='heart' />}>
                         Favourites
                     </Button>
-                    <Button style={accountStyles.button} appearance='ghost' accessoryLeft={<Icon name='gift' />}>
+                    <Button style={accountStyles.button} accessoryLeft={<Icon name='gift' />}>
                         Refer a friend
                     </Button>
-                    <Button style={accountStyles.button} appearance='ghost' accessoryLeft={<Icon name='bulb' />}>
+                    <Button style={accountStyles.button} accessoryLeft={<Icon name='bulb' />}>
                         Submit a venue
                     </Button>
-                    <Divider />
-                    {renderItem('Help', 'question-mark-circle')}
-                    {renderItem('Settings', 'settings')}
                 </Layout>
+                <Divider />
+                {renderItem('Help', 'question-mark-circle')}
+                {renderItem('Settings', 'settings')}
             </Layout>
         </SafeAreaView>
     );
@@ -53,15 +52,27 @@ const accountStyles = StyleSheet.create({
       flex: 1,
     },
     headerContainer: {
-      alignItems: 'center',
-      paddingVertical: 20,
-      paddingHorizontal: 10,
+        alignItems: 'center',
+        paddingVertical: 60,
+        paddingHorizontal: 16,
+    },
+    avatar: {
+        width: 124,
+        height: 124,
+        resizeMode: 'contain',
+        alignSelf: 'center',
+        marginBottom: 24,
     },
     contentContainer: {
-      flex: 1,
-      padding: 10,
+        flexDirection: 'row',
+        padding: 10,
+        justifyContent: 'space-between',
     },
     button: {
-      marginVertical: 2,
+        flex: 1,
+        flexDirection: 'column',
+        alignItems: 'center',
+        paddingHorizontal: 5,
+        marginHorizontal: 5,
     },
 });

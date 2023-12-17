@@ -19,7 +19,6 @@ export const SafetyScreen = ({ navigation }) => {
     );
   };
   
-  
   const safetyStyles = StyleSheet.create({
     screenContainer: {
       flex: 1,

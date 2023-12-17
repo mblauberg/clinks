@@ -4,11 +4,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomNavigation, BottomNavigationTab, Icon } from '@ui-kitten/components';
 
-
 import { HomeScreen } from './home';
-import { DetailsScreen } from './details';
 import { SafetyScreen } from './safety';
 import { AccountScreen } from './account';
+
+import { DetailsScreen } from './details';
+import { VenueScreen } from './venue';
 
 const HomeStack = createStackNavigator();
 const SafetyStack = createStackNavigator();
@@ -18,6 +19,7 @@ const HomeNavigator = () => (
   <HomeStack.Navigator screenOptions={{ headerShown: false}} >
     <HomeStack.Screen name="Home" component={HomeScreen} />
     <HomeStack.Screen name="Details" component={DetailsScreen} />
+    <HomeStack.Screen name="Venue" component={VenueScreen} />
     {/* Additional screens can be added here */}
   </HomeStack.Navigator>
 );
