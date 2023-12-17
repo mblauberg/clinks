@@ -7,7 +7,6 @@ import { BottomNavigation, BottomNavigationTab, Icon } from '@ui-kitten/componen
 import { HomeScreen } from './home';
 import { SafetyScreen } from './safety';
 import { AccountScreen } from './account';
-
 import { DetailsScreen } from './details';
 import { VenueScreen } from './venue';
 

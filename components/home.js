@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, 
     SafeAreaView, 
-    View, 
-    Text, 
     TouchableOpacity, 
 } from 'react-native';
 import { 
@@ -12,6 +10,7 @@ import {
   Divider,
   TopNavigation,
   Icon,
+  Text,
 } from '@ui-kitten/components';
 
 const FilterIcon = (props) => (
@@ -36,25 +35,25 @@ export const HomeScreen = ({ navigation}) => {
         navigation.navigate('Venue');
     }
 
-
+ 
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <TopNavigation title='Clinks' alignment='center'/>
             <Layout style={homeStyles.container}>
-                <View style={homeStyles.searchContainer}>
+                <Layout style={homeStyles.searchContainer}>
                     <Input
                         style={homeStyles.searchInput}
                         placeholder="Search..."
                         accessoryRight={(props) => <FilterIcon {...props} onPress={toggleFilter} />}
                     />
                     {isFilterVisible && (
-                        <View style={homeStyles.filterContainer}>
+                        <Layout style={homeStyles.filterContainer}>
                             {/* Add your filter options here */}
                             <Text>Filter options...</Text>
-                        </View>
+                        </Layout>
                     )}
-                </View>
+                </Layout>
                 <Button style={homeStyles.button} onPress={navigateVenue}>VENUE</Button>
                 <Button style={homeStyles.button} onPress={navigateDetails}>OPEN DETAILS</Button>
             </Layout>
