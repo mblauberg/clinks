@@ -5,7 +5,7 @@ import {
 } from '@ui-kitten/components';
 import * as eva from "@eva-design/eva";
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
-import { AppNavigator } from './components/navigator';
+import { AppNavigator } from './navigator';
 // import { default as appTheme } from './theme.json';
 
 export default () => (
