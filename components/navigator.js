@@ -9,6 +9,8 @@ import { SafetyScreen } from './safety';
 import { AccountScreen } from './account';
 import { DetailsScreen } from './details';
 import { VenueScreen } from './venue';
+import { LoginScreen } from './login';
+import { SignupScreen } from './signup';
 
 const HomeStack = createStackNavigator();
 const SafetyStack = createStackNavigator();
@@ -33,6 +35,8 @@ const SafetyNavigator = () => (
 const AccountNavigator = () => (
   <AccountStack.Navigator screenOptions={{ headerShown: false}} >
     <AccountStack.Screen name="Account" component={AccountScreen} />
+    <AccountStack.Screen name="Login" component={LoginScreen} />
+    <AccountStack.Screen name="Signup" component={SignupScreen} />
     {/* Additional screens can be added here */}
   </AccountStack.Navigator>
 );

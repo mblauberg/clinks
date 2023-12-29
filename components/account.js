@@ -1,13 +1,13 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView, View } from 'react-native';
-import { Layout, Text, TopNavigation, Divider, Avatar, Button, Icon, ListItem, } from '@ui-kitten/components';
+import { Layout, Text, Divider, Avatar, Button, Icon, ListItem, } from '@ui-kitten/components';
 
 
-export const AccountScreen = () => {
+export const AccountScreen = ( {navigation} ) => {
     
-    // const navigateDetails = () => {
-    //     navigation.navigate('Details');
-    // };
+    const navigateLogin = () => {
+        navigation.navigate('Login');
+    };
 
     const renderItemAccessory = (style, iconName) => (
         <Icon {...style} name={iconName} />
@@ -29,7 +29,7 @@ export const AccountScreen = () => {
                     <Text category='h1'>Michael Blauberg </Text>
                 </View>
                 <Layout style={accountStyles.contentContainer}>
-                    <Button style={accountStyles.button} accessoryLeft={<Icon name='heart' />}>
+                    <Button style={accountStyles.button} accessoryLeft={<Icon name='heart'/>} onPress={navigateLogin} >
                         Favourites
                     </Button>
                     <Button style={accountStyles.button} accessoryLeft={<Icon name='gift' />}>
@@ -40,8 +40,9 @@ export const AccountScreen = () => {
                     </Button>
                 </Layout>
                 <Divider />
-                {renderItem('Help', 'question-mark-circle')}
+                {renderItem('My Account', 'person')}
                 {renderItem('Settings', 'settings')}
+                {renderItem('Help', 'question-mark-circle')}
             </Layout>
         </SafeAreaView>
     );
@@ -53,8 +54,9 @@ const accountStyles = StyleSheet.create({
     },
     headerContainer: {
         alignItems: 'center',
-        paddingVertical: 60,
+        paddingVertical: 8,
         paddingHorizontal: 16,
+        marginTop: 32,
     },
     avatar: {
         width: 124,
@@ -65,14 +67,16 @@ const accountStyles = StyleSheet.create({
     },
     contentContainer: {
         flexDirection: 'row',
-        padding: 10,
+        padding: 8,
         justifyContent: 'space-between',
+        marginVertical:12,
     },
     button: {
         flex: 1,
         flexDirection: 'column',
         alignItems: 'center',
-        paddingHorizontal: 5,
-        marginHorizontal: 5,
+        paddingHorizontal: 4,
+        marginHorizontal: 8,
+        borderRadius: 32,
     },
 });

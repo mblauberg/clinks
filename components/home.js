@@ -7,7 +7,6 @@ import {
   Layout, 
   Input, 
   Button,
-  Divider,
   TopNavigation,
   Icon,
   Text,
@@ -35,7 +34,6 @@ export const HomeScreen = ({ navigation}) => {
         navigation.navigate('Venue');
     }
 
- 
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
