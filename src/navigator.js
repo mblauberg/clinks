@@ -43,10 +43,7 @@ const AccountNavigator = () => (
 
 // Bottom Tab Navigator Icons
 const HomeIcon = (props) => (
-  <Icon
-    {...props}
-    name='home'
-  />
+  <Icon {...props} name='home'/>
 );
 
 const PulseIcon = (props) => (
@@ -54,10 +51,7 @@ const PulseIcon = (props) => (
 );
 
 const AccountIcon = (props) => (
-  <Icon
-    {...props}
-    name='person'
-  />
+  <Icon {...props} name='person'/>
 );
 
 // Bottom tab navigator
@@ -75,9 +69,9 @@ const BottomTabBar = ({ navigation, state }) => (
 
 const TabNavigator = () => (
   <Navigator tabBar={props => <BottomTabBar {...props} />} screenOptions={{ headerShown: false}}>
-    <Screen name='Home' component={HomeNavigator} />
-    <Screen name='Safety' component={SafetyNavigator} />
-    <Screen name='Account' component={AccountNavigator} />
+    <Screen name='T1' component={HomeNavigator} />
+    <Screen name='T2' component={SafetyNavigator} />
+    <Screen name='T3' component={AccountNavigator} />
   </Navigator>
 );
 

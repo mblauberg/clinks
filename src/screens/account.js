@@ -33,7 +33,7 @@ export const AccountScreen = ( {navigation} ) => {
             <Divider/>
             <Layout style={accountStyles.container}>
                 <View style={accountStyles.headerContainer}>
-                    <Avatar source={require('../assets/account.png')} style={accountStyles.avatar} size='giant' />
+                    <Avatar source={require('../../assets/account.png')} style={accountStyles.avatar} size='giant' />
                     <Text category='h1'>Michael Blauberg </Text>
                 </View>
                 <Layout style={accountStyles.contentContainer}>

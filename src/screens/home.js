@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, 
-    SafeAreaView, 
-    TouchableOpacity, 
-} from 'react-native';
+import { StyleSheet, SafeAreaView, TouchableOpacity, } from 'react-native';
 import { 
   Layout, 
   Input, 

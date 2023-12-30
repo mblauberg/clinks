@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { KeyboardAvoidingView, SafeAreaView, StyleSheet } from 'react-native';
 import { Input, Button, Layout, Text, TopNavigation, TopNavigationAction, Icon } from '@ui-kitten/components';
 import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
