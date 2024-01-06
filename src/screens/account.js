@@ -9,7 +9,7 @@ export const AccountScreen = ( {navigation} ) => {
     const handleLogout = () => {
         signOut(auth)
             .then(() => {
-                navigation.navigate('Login');
+                navigation.reset({index: 0, routes: [{ name: 'Login' }]});
                 console.log("Logged out");
             })
             .catch((error) => {
@@ -17,16 +17,16 @@ export const AccountScreen = ( {navigation} ) => {
             });
     };
 
-    const renderItemAccessory = (style, iconName) => (
-        <Icon {...style} name={iconName} />
-    );
+    // const renderItemAccessory = (style, iconName) => (
+    //     <Icon {...style} name={iconName} />
+    // );
     
-    const renderItem = (title, iconName) => (
-        <ListItem
-            title={title}
-            accessoryLeft={(props) => renderItemAccessory(props, iconName)}
-        />
-    );
+    // const renderItem = (title, iconName) => (
+    //     <ListItem
+    //         title={title}
+    //         accessoryLeft={(props) => renderItemAccessory(props, iconName)}
+    //     />
+    // );
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -48,9 +48,9 @@ export const AccountScreen = ( {navigation} ) => {
                     </Button>
                 </Layout>
                 <Divider />
-                {renderItem('My Account', 'person')}
+                {/* {renderItem('My Account', 'person')}
                 {renderItem('Settings', 'settings')}
-                {renderItem('Help', 'question-mark-circle')}
+                {renderItem('Help', 'question-mark-circle')} */}
                 <Button style={accountStyles.list} accessoryLeft={<Icon name='log-out' />} appearance='ghost' onPress={handleLogout}>
                     Logout
                 </Button>
@@ -62,7 +62,7 @@ export const AccountScreen = ( {navigation} ) => {
 const accountStyles = StyleSheet.create({
     container: {
       flex: 1,
-      padding: 4,
+      padding: 16,
     },
     headerContainer: {
         alignItems: 'center',
@@ -92,6 +92,6 @@ const accountStyles = StyleSheet.create({
     list: {
         flexDirection: 'row',
         justifyContent: 'left',
-        padding: 8,
+        marginVertical: 12,
     }
 });

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { KeyboardAvoidingView, SafeAreaView, StyleSheet } from 'react-native';
-import { Input, Button, Layout, Text } from '@ui-kitten/components';
+import { KeyboardAvoidingView, SafeAreaView, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { Input, Button, Layout, Text, Icon } from '@ui-kitten/components';
 import { auth } from '../services/firebase';
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 
@@ -12,6 +12,20 @@ export const LoginScreen = ( {navigation} ) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
+
+  const toggleSecureEntry = () => {
+    setSecureTextEntry(!secureTextEntry);
+  };
+
+  const EyeIcon = (props) => (
+    <TouchableWithoutFeedback onPress={toggleSecureEntry}>
+      <Icon
+        {...props}
+        name={!secureTextEntry ? 'eye' : 'eye-off'}
+      />
+    </TouchableWithoutFeedback>
+  );
 
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
@@ -31,11 +45,9 @@ export const LoginScreen = ( {navigation} ) => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in
-        console.log("User is signed in");
-        navigation.navigate('Account');
+        navigation.reset({index: 0, routes: [{ name: 'Account' }]});
       } else {
         // User is signed out
-        console.log("User is signed out");
       }
     });
   });
@@ -50,13 +62,16 @@ export const LoginScreen = ( {navigation} ) => {
                 placeholder='Email'
                 onChangeText={setEmail}
                 style={styles.input}
+                accessoryLeft={<Icon name='email' />}
             />
             <Input
                 value={password}
                 placeholder='Password'
-                secureTextEntry={true}
+                secureTextEntry={secureTextEntry}
                 onChangeText={setPassword}
                 style={styles.input}
+                accessoryLeft={<Icon name='lock' />}
+                accessoryRight={EyeIcon}
             />
             <Button onPress={handleLogin} style={styles.signInButton}>
                 Sign in
@@ -80,7 +95,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 32,
+    padding: 24,
   },
   title: {
     marginVertical: 12,
@@ -90,12 +105,12 @@ const styles = StyleSheet.create({
   input: {
     marginVertical: 4,
     width: '100%',
-    borderRadius: 8,
+    borderRadius: 12,
   },
   signInButton: {
     marginVertical: 12,
     width: '100%',
-    borderRadius: 8,
+    borderRadius: 12,
   },
   forgotButton: {
     marginVertical: 4,

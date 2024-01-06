@@ -12,15 +12,15 @@ const HeartIcon = (props) => (
 
 const AddressIcon = (props) => (
     <Icon {...props} name='pin-outline'/>
-  );
+);
   
-  const ClockIcon = (props) => (
-    <Icon {...props} name='clock-outline'/>
-  );
-  
-  const WebIcon = (props) => (
-    <Icon {...props} name='globe-outline'/>
-  );
+const ClockIcon = (props) => (
+  <Icon {...props} name='clock-outline'/>
+);
+
+const WebIcon = (props) => (
+  <Icon {...props} name='globe-outline'/>
+);
 
 export const VenueScreen = ({ navigation }) => {
     const [heartFilled, setHeartFilled] = useState(false);
@@ -42,7 +42,7 @@ export const VenueScreen = ({ navigation }) => {
     );
 
     const venueInfo = {
-        address: '123 Venue St, City, Country',
+        address: '123 Venue St, City',
         openUntil: '10:00 PM',
         website: 'www.venuewebsite.com',
     };
