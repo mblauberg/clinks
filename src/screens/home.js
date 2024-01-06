@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { StyleSheet, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, SafeAreaView, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { 
   Layout, 
   Input, 
   Button,
   Icon,
   Text,
+  ViewPager,
   TopNavigation,
-  useTheme
+  useTheme,
 } from '@ui-kitten/components';
 
 const FilterIcon = (props) => (
@@ -33,6 +34,23 @@ const SearchBar = ({ onFilterPress, isFilterVisible, styles }) => (
     </Layout>
 );
 
+const ViewPagerComponent = ({ data, pageIndex, onPageSelected, styles }) => {
+    return (
+        <ViewPager 
+            style={styles.viewPager}
+            selectedIndex={pageIndex}
+            onSelect={index => onPageSelected(index)}
+        >
+            {data.map((item, index) => (
+            <Layout key={index} style={styles.page}>
+                <Image source={{ uri: item.image }} style={styles.image} />
+                <Text style={styles.textOverlay}>{item.text}</Text>
+            </Layout>
+        ))}
+      </ViewPager>
+    );
+  };
+
 export const HomeScreen = ({ navigation}) => {
 
     const theme = useTheme();
@@ -43,6 +61,12 @@ export const HomeScreen = ({ navigation}) => {
     const toggleFilter = () => {
         setIsFilterVisible(!isFilterVisible);
     };
+    
+    const [pageIndex, setPageIndex] = useState(0);
+
+    const handlePageSelected = (index) => {
+        setPageIndex(index);
+    };
 
     const navigateDetails = () => {
         navigation.navigate('Details');
@@ -51,6 +75,15 @@ export const HomeScreen = ({ navigation}) => {
     const navigateVenue = () => {
         navigation.navigate('Venue');
     }
+
+    const promos = [
+        { image: require('../../assets/venue_1.png'), text: 'Promo 1' },
+        { image: require('../../assets/club_1.png'), text: 'Promo 2' },
+        { image: require('../../assets/club_2.png'), text: 'Promo 3' },
+        { image: require('../../assets/bar.png'), text: 'Promo 4' },
+    ];
+
+    console.log(promos);
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -64,6 +97,13 @@ export const HomeScreen = ({ navigation}) => {
             />
             <ScrollView style={styles.container}>
             <Layout style={{flex: 1}}>
+                <Image source={require('../../assets/venue_2.png')} style={{width: '100%', height: 200, borderRadius:16}} />
+                <ViewPagerComponent 
+                    data={promos} 
+                    pageIndex={pageIndex}
+                    onPageSelected={handlePageSelected}
+                    styles={styles}
+                />
                 <Button style={styles.button} onPress={navigateVenue}>VENUE</Button>
                 <Button style={styles.button} onPress={navigateDetails}>OPEN DETAILS</Button>
             </Layout>
@@ -96,5 +136,22 @@ const createStyles = (theme) => StyleSheet.create({
         paddingHorizontal: 12,
         paddingVertical: 8,
         borderRadius: 12,
+    },
+    viewPager: {
+        flex: 1,
+    },
+    page: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 192,
+    },
+    image: {
+        width: '100%',
+        height: '100%',
+    },
+    textOverlay: {
+        zIndex: 1, 
+        color: 'white',
+        fontSize: 20,
     },
 });

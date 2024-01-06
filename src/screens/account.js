@@ -17,16 +17,16 @@ export const AccountScreen = ( {navigation} ) => {
             });
     };
 
-    // const renderItemAccessory = (style, iconName) => (
-    //     <Icon {...style} name={iconName} />
-    // );
+    const renderItemAccessory = (style, iconName) => (
+        <Icon {...style} name={iconName} />
+    );
     
-    // const renderItem = (title, iconName) => (
-    //     <ListItem
-    //         title={title}
-    //         accessoryLeft={(props) => renderItemAccessory(props, iconName)}
-    //     />
-    // );
+    const renderItem = (title, iconName) => (
+        <ListItem
+            title={title}
+            accessoryLeft={(props) => renderItemAccessory(props, iconName)}
+        />
+    );
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -48,9 +48,9 @@ export const AccountScreen = ( {navigation} ) => {
                     </Button>
                 </Layout>
                 <Divider />
-                {/* {renderItem('My Account', 'person')}
+                {renderItem('My Account', 'person')}
                 {renderItem('Settings', 'settings')}
-                {renderItem('Help', 'question-mark-circle')} */}
+                {renderItem('Help', 'question-mark-circle')}
                 <Button style={accountStyles.list} accessoryLeft={<Icon name='log-out' />} appearance='ghost' onPress={handleLogout}>
                     Logout
                 </Button>
