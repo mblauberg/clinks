@@ -43,8 +43,8 @@ const ViewPagerComponent = ({ data, pageIndex, onPageSelected, styles }) => {
         >
             {data.map((item, index) => (
             <Layout key={index} style={styles.page}>
-                <Image source={{ uri: item.image }} style={styles.image} />
-                <Text style={styles.textOverlay}>{item.text}</Text>
+                <Image source={item.image} style={styles.image} />
+                <Text style={styles.textOverlay} category='h3'>{item.text}</Text>
             </Layout>
         ))}
       </ViewPager>
@@ -83,8 +83,6 @@ export const HomeScreen = ({ navigation}) => {
         { image: require('../../assets/bar.png'), text: 'Promo 4' },
     ];
 
-    console.log(promos);
-
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <TopNavigation 
@@ -97,7 +95,6 @@ export const HomeScreen = ({ navigation}) => {
             />
             <ScrollView style={styles.container}>
             <Layout style={{flex: 1}}>
-                <Image source={require('../../assets/venue_2.png')} style={{width: '100%', height: 200, borderRadius:16}} />
                 <ViewPagerComponent 
                     data={promos} 
                     pageIndex={pageIndex}
@@ -121,15 +118,15 @@ const createStyles = (theme) => StyleSheet.create({
     },
     searchContainer: {
         flex: 1,
-        flexDirection: 'row',
+        flexDirection: 'column',
         alignItems: 'center',
     },
     searchInput: {
-        flex: 1,
+        width: '100%',
         borderRadius: '100%',
     },
     filterContainer: {
-        padding: 10,
+        padding: 8,
     },
     button: {
         marginVertical: 8,
@@ -138,20 +135,24 @@ const createStyles = (theme) => StyleSheet.create({
         borderRadius: 12,
     },
     viewPager: {
-        flex: 1,
     },
     page: {
-        justifyContent: 'center',
+        flex: 1,
         alignItems: 'center',
-        height: 192,
+        justifyContent: 'center',
+        height: 128,
+        marginVertical: 8,
     },
     image: {
         width: '100%',
         height: '100%',
+        resizeMode: 'cover',
     },
     textOverlay: {
         zIndex: 1, 
         color: 'white',
-        fontSize: 20,
+
+        position: 'absolute',
+        textAlign: 'center',
     },
 });

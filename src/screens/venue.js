@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, View, Image } from 'react-native';
 import { Divider, Icon, Layout, Text, TopNavigation, TopNavigationAction } from '@ui-kitten/components';
 
 const BackIcon = (props) => (
@@ -61,8 +61,7 @@ export const VenueScreen = ({ navigation }) => {
         />
         <Divider/>
         <ScrollView>
-            <Layout style={{marginVertical:100}}>
-            </Layout>
+            <Image source={require('../../assets/venue_1.png')} style={styles.image} />
             <Layout style={styles.headerContainer}>
                 <Text category='h1'>VENUE</Text>
                 <Text category='s2'>4.5 ★ (200+)</Text>
@@ -99,6 +98,10 @@ export const VenueScreen = ({ navigation }) => {
         alignItems: 'center',
         paddingVertical: 12,
         paddingHorizontal: 8,
+    },
+    image: {
+        width: '100%',
+        height: 192,
     },
     bodyContainer: {
         flex: 1,

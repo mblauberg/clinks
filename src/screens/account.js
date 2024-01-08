@@ -36,12 +36,12 @@ export const AccountScreen = ( {navigation} ) => {
                     <Avatar source={require('../../assets/account.png')} style={accountStyles.avatar} size='giant' />
                     <Text category='h1'>Michael Blauberg </Text>
                 </View>
-                <Layout style={accountStyles.contentContainer}>
+                <Layout style={accountStyles.buttonContainer}>
                     <Button style={accountStyles.button} accessoryLeft={<Icon name='heart'/>}>
-                        Favourites
+                        <Text style={accountStyles.text} category='s1'> Favourites </Text>
                     </Button>
                     <Button style={accountStyles.button} accessoryLeft={<Icon name='gift' />}>
-                        Refer a friend
+                        <Text style={accountStyles.text} category='s1'> Refer a friend </Text> 
                     </Button>
                     <Button style={accountStyles.button} accessoryLeft={<Icon name='bulb' />}>
                         Submit a venue
@@ -77,21 +77,28 @@ const accountStyles = StyleSheet.create({
         alignSelf: 'center',
         marginBottom: 24,
     },
-    contentContainer: {
+    buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginVertical: 12,
+        height: '12%',
     },
     button: {
         flex: 1,
         flexDirection: 'column',
         paddingHorizontal: 4,
         marginHorizontal: 8,
-        borderRadius: 32,
+        borderRadius: 24,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     list: {
         flexDirection: 'row',
         justifyContent: 'left',
         marginVertical: 12,
+    },
+    text: {
+        textAlign: 'center',
+
     }
 });
