@@ -3,7 +3,7 @@ import { KeyboardAvoidingView, SafeAreaView, StyleSheet, TouchableWithoutFeedbac
 import { Input, Button, Layout, Text, TopNavigation, Icon } from '@ui-kitten/components';
 
 import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-import { collection, addDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from '../services/firebase';
 
 import { BackAction } from '../components/BackAction';
@@ -62,8 +62,8 @@ export const SignupScreen = ( {navigation} ) => {
 
           // Store additional user data in Firestore
           try {
-            await addDoc(collection(db, "users"), {
-              uid: user.uid,
+            const userDocRef = doc(db, 'users', user.uid);
+            await setDoc(userDocRef, {
               fullName: fullname,
               email: email,
               phone: phone

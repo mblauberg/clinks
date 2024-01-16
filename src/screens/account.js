@@ -11,7 +11,7 @@ const fetchUserData = async (userId) => {
         const userDoc = await getDoc(userDocRef);
   
         if (userDoc.exists) {
-            console.log('User data found!');
+            console.log(userDoc.data());
             return userDoc.data(); // This will return the user data object
         } else {
             console.log('No user data found!');
@@ -32,6 +32,9 @@ export const AccountScreen = ( {navigation} ) => {
         if (auth.currentUser) {
             fetchUserData(auth.currentUser.uid)
             .then((data) => {
+                console.log(auth.currentUser.uid)
+                console.log(auth.currentUser)
+                console.log("Fetched user data: ", data);
                 setUserData(data); // Set the user data state with the fetched data
             });
         }
