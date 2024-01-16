@@ -1,11 +1,47 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, SafeAreaView, View } from 'react-native';
 import { Layout, Text, Divider, Avatar, Button, Icon, ListItem, } from '@ui-kitten/components';
 import { signOut } from 'firebase/auth';
-import { auth } from '../services/firebase';
+import { doc, getDoc } from 'firebase/firestore';
+import { auth, db } from '../services/firebase';
+
+const fetchUserData = async (userId) => {
+    try {
+        const userDocRef = doc(db, 'users', userId);
+        const userDoc = await getDoc(userDocRef);
+  
+        if (userDoc.exists) {
+            console.log('User data found!');
+            return userDoc.data(); // This will return the user data object
+        } else {
+            console.log('No user data found!');
+            return null; // Handle the case where the user data doesn't exist
+        }
+    } catch (error) {
+      console.error('Error fetching user data: ', error);
+      return null; // Handle the error appropriately
+    }
+};
+  
 
 export const AccountScreen = ( {navigation} ) => {
     
+    const [userData, setUserData] = useState(null);
+
+    useEffect(() => {
+        if (auth.currentUser) {
+            fetchUserData(auth.currentUser.uid)
+            .then((data) => {
+                setUserData(data); // Set the user data state with the fetched data
+            });
+        }
+        else {
+            // User is not logged in, redirect to login screen or take any other action
+            navigation.reset({index: 0, routes: [{ name: 'Login' }]});
+        }
+    }, [auth.currentUser]);
+
+
     const handleLogout = () => {
         signOut(auth)
             .then(() => {
@@ -34,7 +70,7 @@ export const AccountScreen = ( {navigation} ) => {
             <Layout style={accountStyles.container}>
                 <View style={accountStyles.headerContainer}>
                     <Avatar source={require('../../assets/account.png')} style={accountStyles.avatar} size='giant' />
-                    <Text category='h1'>Michael Blauberg </Text>
+                    <Text category='h1'>{userData ? userData.fullName : 'Loading...'}</Text>
                 </View>
                 <Layout style={accountStyles.buttonContainer}>
                     <Button style={accountStyles.button} accessoryLeft={<Icon name='heart'/>}>

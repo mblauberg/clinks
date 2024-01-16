@@ -10,7 +10,7 @@ export const SafetyScreen = ({ navigation }) => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <TopNavigation title='Safety' alignment='center'/>
+            <TopNavigation alignment='center'/>
             <Divider/>
             <Layout style={safetyStyles.screenContainer}>
                 <Text style={safetyStyles.screenText}>Stay safe!!</Text>

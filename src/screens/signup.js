@@ -1,114 +1,150 @@
 import React, { useState, useEffect } from 'react';
 import { KeyboardAvoidingView, SafeAreaView, StyleSheet, TouchableWithoutFeedback } from 'react-native';
-import { Input, Button, Layout, Text, TopNavigation, TopNavigationAction, Icon } from '@ui-kitten/components';
-import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-import { auth } from '../services/firebase';
+import { Input, Button, Layout, Text, TopNavigation, Icon } from '@ui-kitten/components';
 
-const BackIcon = (props) => (
-    <Icon {...props} name='arrow-back' />
-  );
+import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { collection, addDoc } from "firebase/firestore";
+import { auth, db } from '../services/firebase';
+
+import { BackAction } from '../components/BackAction';
 
 export const SignupScreen = ( {navigation} ) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [fullname, setFullname] = useState('');
-    const [phone, setPhone] = useState('');
-    const [secureTextEntry, setSecureTextEntry] = useState(true);
+  
+  // Check if form is valid
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isFullNameValid, setIsFullNameValid] = useState(true);
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isPhoneValid, setIsPhoneValid] = useState(true);
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
 
-    const toggleSecureEntry = () => {
-        setSecureTextEntry(!secureTextEntry);
-    }
+  const validateForm = () => {
+      setIsFullNameValid(fullname !== '');
+      setIsEmailValid(email !== '');
+      setIsPhoneValid(phone !== '');
+      setIsPasswordValid(password !== '');
+      return fullname && email && phone && password;
+  };
 
-    const EyeIcon = (props) => (
-      <TouchableWithoutFeedback onPress={toggleSecureEntry}>
-        <Icon
-          {...props}
-          name={!secureTextEntry ? 'eye' : 'eye-off'}
-        />
-      </TouchableWithoutFeedback>
-    );
+  // Asterisk for invalid fields
+  const renderAsterisk = (isValid) => {
+    return isValid || !isSubmitted ? null : <Text style={{color: 'red'}}>*</Text>;
+  };
 
-    const handleSignup = () => {
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed up 
-                const user = userCredential.user;
-                console.log("Registered: ", user.email);
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log("Error: ", errorCode, errorMessage);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [fullname, setFullname] = useState('');
+  const [phone, setPhone] = useState('');
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
+
+  // Password hiding
+  const toggleSecureEntry = () => {
+      setSecureTextEntry(!secureTextEntry);
+  };
+
+  const EyeIcon = (props) => (
+    <TouchableWithoutFeedback onPress={toggleSecureEntry}>
+      <Icon
+        {...props}
+        name={!secureTextEntry ? 'eye' : 'eye-off'}
+      />
+    </TouchableWithoutFeedback>
+  );
+  
+  // Signup logic
+  const handleSignup = () => {
+    setIsSubmitted(true);
+    if(validateForm()) {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(async (userCredential) => {
+          // Signed up 
+          const user = userCredential.user;
+          console.log("Registered: ", user.email);
+
+          // Store additional user data in Firestore
+          try {
+            await addDoc(collection(db, "users"), {
+              uid: user.uid,
+              fullName: fullname,
+              email: email,
+              phone: phone
             });
-    };
-
-    useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-          if (user) {
-            // User is signed in
-            console.log("User is signed in");
-            navigation.reset({index: 0, routes: [{ name: 'Account' }]});
-          } else {
-            // User is signed out
-            console.log("User is signed out");
+            console.log("User data stored successfully!");
+          } catch (error) {
+            console.error("Error adding document: ", error);
           }
+
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log("Error: ", errorCode, errorMessage);
         });
-    });
-    
-    const navigateBack = () => {
-        navigation.goBack();
-    }
+    };
+  };
 
-    const BackAction = () => (
-        <TopNavigationAction icon={BackIcon} onPress={navigateBack}/>
-    );
+  // Sign user in
+  useEffect(() => {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // User is signed in
+          console.log("User is signed in");
+          navigation.reset({index: 0, routes: [{ name: 'Account' }]});
+        } else {
+          // User is signed out
+          console.log("User is signed out");
+        }
+      });
+  });
 
-    return (
-      <SafeAreaView style={{ flex: 1 }}>
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-        <TopNavigation
-        alignment='center'
-        accessoryLeft={BackAction}
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
+      <TopNavigation
+      alignment='center'
+      accessoryLeft={() => BackAction(navigation)}
+      />
+      <Layout style={styles.container}>
+        <Text style={styles.title} category='h4'>Sign Up</Text>
+        <Input
+            value={fullname}
+            placeholder='Full Name'
+            onChangeText={setFullname}
+            style={styles.input}
+            accessoryLeft={<Icon name='person' />}
+            accessoryRight={() => renderAsterisk(isFullNameValid)}
         />
-        <Layout style={styles.container}>
-          <Text style={styles.title} category='h4'>Sign Up</Text>
-          <Input
-              value={fullname}
-              placeholder='Full Name'
-              onChangeText={setFullname}
-              style={styles.input}
-              accessoryLeft={<Icon name='person' />}
-          />
-          <Input
-              value={email}
-              placeholder='Email'
-              onChangeText={setEmail}
-              style={styles.input}
-              accessoryLeft={<Icon name='email' />}
-          />
-          <Input
-              value={phone}
-              placeholder='Phone number'
-              onChangeText={setPhone}
-              style={styles.input}
-              accessoryLeft={<Icon name='phone' />}
-          />
-          <Input
-              value={password}
-              placeholder='Password'
-              secureTextEntry={secureTextEntry}
-              onChangeText={setPassword}
-              style={styles.input}
-              accessoryLeft={<Icon name='lock' />}
-              accessoryRight={<EyeIcon secureTextEntry={secureTextEntry} toggleSecureEntry={toggleSecureEntry} />}
-          />
-          <Button onPress={handleSignup} style={styles.signupButton}>
-              Sign Up
-          </Button>
-        </Layout>
-      </KeyboardAvoidingView>
-      </SafeAreaView>
-    )
+        <Input
+            value={email}
+            placeholder='Email'
+            onChangeText={setEmail}
+            style={styles.input}
+            accessoryLeft={<Icon name='email' />}
+            accessoryRight={() => renderAsterisk(isEmailValid)}
+        />
+        <Input
+            value={phone}
+            placeholder='Phone number'
+            onChangeText={setPhone}
+            style={styles.input}
+            accessoryLeft={<Icon name='phone' />}
+            accessoryRight={() => renderAsterisk(isPhoneValid)}
+        />
+        <Input
+            value={password}
+            placeholder='Password'
+            secureTextEntry={secureTextEntry}
+            onChangeText={setPassword}
+            style={styles.input}
+            accessoryLeft={<Icon name='lock' />}
+            accessoryRight={<EyeIcon secureTextEntry={secureTextEntry} toggleSecureEntry={toggleSecureEntry} /> }
+        />
+        <Button onPress={handleSignup} style={styles.signupButton}>
+            Sign Up
+        </Button>
+      </Layout>
+    </KeyboardAvoidingView>
+    </SafeAreaView>
+  )
 }
 
 

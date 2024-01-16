@@ -2,9 +2,7 @@ import React, {useState} from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, View, Image } from 'react-native';
 import { Divider, Icon, Layout, Text, TopNavigation, TopNavigationAction } from '@ui-kitten/components';
 
-const BackIcon = (props) => (
-  <Icon {...props} name='arrow-back' />
-);
+import { BackAction } from '../components/BackAction';
 
 const HeartIcon = (props) => (
     <Icon {...props} name={props.filled ? 'heart' : 'heart-outline'} />
@@ -33,10 +31,6 @@ export const VenueScreen = ({ navigation }) => {
         setHeartFilled(!heartFilled);
     };
   
-    const BackAction = () => (
-        <TopNavigationAction icon={BackIcon} onPress={navigateBack}/>
-    );
-  
     const HeartAction = () => (
         <TopNavigationAction icon={(props) => <HeartIcon {...props} filled={heartFilled} />} onPress={toggleHeart}/>
     );
@@ -52,7 +46,7 @@ export const VenueScreen = ({ navigation }) => {
         <TopNavigation
           title='Venue'
           alignment='center'
-          accessoryLeft={BackAction}
+          accessoryLeft={() => BackAction(navigation)}
           accessoryRight={() => (
             <View style={styles.heartContainer}>
               <HeartAction />

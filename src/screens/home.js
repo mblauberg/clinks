@@ -112,7 +112,7 @@ export const HomeScreen = ({ navigation}) => {
 const createStyles = (theme) => StyleSheet.create({
     container: {
         flex: 1,
-        padding: 16,
+        paddingHorizontal: 16,
         flexDirection: 'column',
         backgroundColor: theme['background-basic-color-1'],
     },
@@ -126,11 +126,11 @@ const createStyles = (theme) => StyleSheet.create({
         borderRadius: '100%',
     },
     filterContainer: {
-        padding: 8,
+        width: '100%',
+        backgroundColor: theme['background-basic-color-2'],
     },
     button: {
         marginVertical: 8,
-        paddingHorizontal: 12,
         paddingVertical: 8,
         borderRadius: 12,
     },
