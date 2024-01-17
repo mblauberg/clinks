@@ -1,9 +1,8 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp, getApps, getApp } from 'firebase/app';
-import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { initializeApp, getApps, getApp } from "firebase/app";
+import { initializeAuth, getReactNativePersistence } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -15,20 +14,20 @@ const firebaseConfig = {
   projectId: "klinks-27ac2",
   storageBucket: "klinks-27ac2.appspot.com",
   messagingSenderId: "161915316544",
-  appId: "1:161915316544:web:5518d5b8896d9539faf2a5"
+  appId: "1:161915316544:web:5518d5b8896d9539faf2a5",
 };
 
 // Initialize Firebase
 let app;
 if (getApps().length === 0) {
-    app = initializeApp(firebaseConfig);
+  app = initializeApp(firebaseConfig);
 } else {
-    app = getApp();
+  app = getApp();
 }
 
 // Initialize Firebase Auth
 const auth = initializeAuth(app, {
-    persistence: getReactNativePersistence(AsyncStorage),
+  persistence: getReactNativePersistence(AsyncStorage),
 });
 
 export { auth };
