@@ -51,6 +51,10 @@ export const AccountScreen = ({ navigation }) => {
       });
   };
 
+  const navigateFavourites = () => {
+    navigation.navigate("Favourites");
+  };
+
   const renderItemAccessory = (style, iconName) => <Icon {...style} name={iconName} />;
 
   const renderItem = (title, iconName) => (
@@ -70,7 +74,7 @@ export const AccountScreen = ({ navigation }) => {
           <Text category="h1">{userData ? userData.fullName : "Loading..."}</Text>
         </View>
         <Layout style={accountStyles.buttonContainer}>
-          <Button style={accountStyles.button} accessoryLeft={<Icon name="heart" />}>
+          <Button style={accountStyles.button} accessoryLeft={<Icon name="heart" onPress={navigateFavourites}/>}>
             <Text style={accountStyles.text} category="s1">
               {" "}
               Favourites{" "}

@@ -6,16 +6,30 @@ import {
   Layout,
   Text,
   TopNavigation,
-  TopNavigationAction,
 } from "@ui-kitten/components";
 import { BackAction } from "../components/BackAction";
 
-export const FavouritesScreen = () => {
+export const FavouritesScreen = ({ navigation }) => {
   return (
-    <View>
-      <Text>favourites</Text>
-    </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <TopNavigation
+        title="Venue"
+        alignment="center"
+        accessoryLeft={() => BackAction(navigation)}
+      />
+      <ScrollView style={styles.container}>
+        <Layout style={{ flex: 1 }}>
+          <Text category="h1">Favourites</Text>
+        </Layout>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: 16,
+    flexDirection: "column",
+  },
+});

@@ -11,6 +11,7 @@ import { DetailsScreen } from "./screens/details";
 import { VenueScreen } from "./screens/venue";
 import { LoginScreen } from "./screens/login";
 import { SignupScreen } from "./screens/signup";
+import { FavouritesScreen } from "./screens/favourites";
 
 const HomeStack = createStackNavigator();
 const SafetyStack = createStackNavigator();
@@ -37,6 +38,7 @@ const AccountNavigator = () => (
     <AccountStack.Screen name="Login" component={LoginScreen} />
     <AccountStack.Screen name="Signup" component={SignupScreen} />
     <AccountStack.Screen name="Account" component={AccountScreen} />
+    <AccountStack.Screen name="Favourites" component={FavouritesScreen} />
     {/* Additional screens can be added here */}
   </AccountStack.Navigator>
 );

@@ -8,7 +8,7 @@ import {
   Text,
   ViewPager,
   TopNavigation,
-  useTheme,
+  useTheme
 } from "@ui-kitten/components";
 
 const FilterIcon = (props) => (
