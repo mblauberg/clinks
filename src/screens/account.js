@@ -29,8 +29,6 @@ export const AccountScreen = ({ navigation }) => {
   useEffect(() => {
     if (auth.currentUser) {
       fetchUserData(auth.currentUser.uid).then((data) => {
-        console.log(auth.currentUser.uid);
-        console.log(auth.currentUser);
         console.log("Fetched user data: ", data);
         setUserData(data); // Set the user data state with the fetched data
       });
@@ -55,10 +53,34 @@ export const AccountScreen = ({ navigation }) => {
     navigation.navigate("Favourites");
   };
 
+  const navigateRefer = () => {
+    navigation.navigate("Refer");
+  };
+
+  const navigateSubmit = () => {
+    navigation.navigate("Submit");
+  };
+
+  const navigateMyAccount = () => {
+    navigation.navigate("MyAccount");
+  };
+
+  const navigateSettings = () => {
+    navigation.navigate("Settings");
+  };
+
+  const navigateHelp = () => {
+    navigation.navigate("Help");
+  };
+
   const renderItemAccessory = (style, iconName) => <Icon {...style} name={iconName} />;
 
-  const renderItem = (title, iconName) => (
-    <ListItem title={title} accessoryLeft={(props) => renderItemAccessory(props, iconName)} />
+  const renderItem = (title, iconName, onPress) => (
+    <ListItem
+      title={title}
+      accessoryLeft={(props) => renderItemAccessory(props, iconName)}
+      onPress={onPress}
+    />
   );
 
   return (
@@ -74,34 +96,25 @@ export const AccountScreen = ({ navigation }) => {
           <Text category="h1">{userData ? userData.fullName : "Loading..."}</Text>
         </View>
         <Layout style={accountStyles.buttonContainer}>
-          <Button style={accountStyles.button} accessoryLeft={<Icon name="heart" onPress={navigateFavourites}/>}>
+          <Button style={accountStyles.button} accessoryLeft={<Icon name="heart"/>} onPress={navigateFavourites}>
             <Text style={accountStyles.text} category="s1">
-              {" "}
-              Favourites{" "}
+              Favourites
             </Text>
           </Button>
-          <Button style={accountStyles.button} accessoryLeft={<Icon name="gift" />}>
+          <Button style={accountStyles.button} accessoryLeft={<Icon name="gift" />} onPress={navigateRefer} >
             <Text style={accountStyles.text} category="s1">
-              {" "}
-              Refer a friend{" "}
+              Refer a friend
             </Text>
           </Button>
-          <Button style={accountStyles.button} accessoryLeft={<Icon name="bulb" />}>
+          <Button style={accountStyles.button} accessoryLeft={<Icon name="bulb" />} onPress={navigateSubmit}>
             Submit a venue
           </Button>
         </Layout>
         <Divider />
-        {renderItem("My Account", "person")}
-        {renderItem("Settings", "settings")}
-        {renderItem("Help", "question-mark-circle")}
-        <Button
-          style={accountStyles.list}
-          accessoryLeft={<Icon name="log-out" />}
-          appearance="ghost"
-          onPress={handleLogout}
-        >
-          Logout
-        </Button>
+        {renderItem("My Account", "person", navigateMyAccount)}
+        {renderItem("Settings", "settings", navigateSettings)}
+        {renderItem("Help", "question-mark-circle", navigateHelp)}
+        {renderItem("Log Out", "log-out", handleLogout)}
       </Layout>
     </SafeAreaView>
   );

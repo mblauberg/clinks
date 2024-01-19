@@ -88,7 +88,6 @@ export const SignupScreen = ({ navigation }) => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in
-        console.log("User is signed in");
         navigation.reset({ index: 0, routes: [{ name: "Account" }] });
       } else {
         // User is signed out

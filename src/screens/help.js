@@ -3,20 +3,20 @@ import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { Layout, Text, TopNavigation, useTheme } from "@ui-kitten/components";
 import { BackAction } from "../components/BackAction";
 
-export const FavouritesScreen = ({ navigation }) => {
+export const HelpScreen = ({ navigation }) => {
   const theme = useTheme();
   const styles = createStyles(theme);
 
   return (
     <SafeAreaView style={styles.container}>
       <TopNavigation
-        title="Favourites"
+        title="Help"
         alignment="center"
         accessoryLeft={() => BackAction(navigation)}
       />
       <ScrollView style={styles.container}>
         <Layout style={{ flex: 1 }}>
-          <Text category="h1">Favourites</Text>
+          <Text category="h1">Help</Text>
         </Layout>
       </ScrollView>
     </SafeAreaView>

@@ -54,6 +54,7 @@ const ViewPagerComponent = ({ data, pageIndex, onPageSelected, styles }) => {
 };
 
 export const HomeScreen = ({ navigation }) => {
+  // Get current theme and create styles with that theme
   const theme = useTheme();
   const styles = createStyles(theme);
 
@@ -85,7 +86,7 @@ export const HomeScreen = ({ navigation }) => {
   ];
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.container}>
       <TopNavigation
         alignment="center"
         accessoryRight={() => (
@@ -96,7 +97,7 @@ export const HomeScreen = ({ navigation }) => {
           />
         )}
       />
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.scrollContainer}>
         <Layout style={{ flex: 1 }}>
           <ViewPagerComponent
             data={promos}
@@ -119,6 +120,10 @@ export const HomeScreen = ({ navigation }) => {
 const createStyles = (theme) =>
   StyleSheet.create({
     container: {
+      flex: 1,
+      backgroundColor: theme["background-basic-color-1"],
+    },
+    scrollContainer: {
       flex: 1,
       paddingHorizontal: 16,
       flexDirection: "column",

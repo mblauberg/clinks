@@ -12,6 +12,11 @@ import { VenueScreen } from "./screens/venue";
 import { LoginScreen } from "./screens/login";
 import { SignupScreen } from "./screens/signup";
 import { FavouritesScreen } from "./screens/favourites";
+import { ReferScreen } from "./screens/refer";
+import { SubmitScreen } from "./screens/submit";
+import { MyAccountScreen } from "./screens/myaccount";
+import { SettingsScreen } from "./screens/settings";
+import { HelpScreen } from "./screens/help";
 
 const HomeStack = createStackNavigator();
 const SafetyStack = createStackNavigator();
@@ -39,6 +44,11 @@ const AccountNavigator = () => (
     <AccountStack.Screen name="Signup" component={SignupScreen} />
     <AccountStack.Screen name="Account" component={AccountScreen} />
     <AccountStack.Screen name="Favourites" component={FavouritesScreen} />
+    <AccountStack.Screen name="Refer" component={ReferScreen} />
+    <AccountStack.Screen name="Submit" component={SubmitScreen} />
+    <AccountStack.Screen name="MyAccount" component={MyAccountScreen} />
+    <AccountStack.Screen name="Settings" component={SettingsScreen} />
+    <AccountStack.Screen name="Help" component={HelpScreen} />
     {/* Additional screens can be added here */}
   </AccountStack.Navigator>
 );
@@ -55,6 +65,7 @@ const { Navigator, Screen } = createBottomTabNavigator();
 
 const BottomTabBar = ({ navigation, state }) => (
   <BottomNavigation
+    appearance="noIndicator"
     selectedIndex={state.index}
     onSelect={(index) => navigation.navigate(state.routeNames[index])}
   >
