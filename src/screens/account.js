@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, SafeAreaView, View } from "react-native";
-import { Layout, Text, Divider, Avatar, Button, Icon, ListItem } from "@ui-kitten/components";
+import { Layout, Text, Divider, Avatar, Button, Icon, ListItem, useTheme } from "@ui-kitten/components";
 import { signOut } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../services/firebase";
+import SquareButton from "../components/SquareButton";
 
 const fetchUserData = async (userId) => {
   try {
@@ -24,6 +25,9 @@ const fetchUserData = async (userId) => {
 };
 
 export const AccountScreen = ({ navigation }) => {
+  const theme = useTheme();
+  const styles = createStyles(theme);
+
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
@@ -80,50 +84,38 @@ export const AccountScreen = ({ navigation }) => {
       title={title}
       accessoryLeft={(props) => renderItemAccessory(props, iconName)}
       onPress={onPress}
+      style={styles.list}
     />
   );
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Divider />
-      <Layout style={accountStyles.container}>
-        <View style={accountStyles.headerContainer}>
-          <Avatar
-            source={require("../../assets/account.png")}
-            style={accountStyles.avatar}
-            size="giant"
-          />
-          <Text category="h1">{userData ? userData.fullName : "Loading..."}</Text>
-        </View>
-        <Layout style={accountStyles.buttonContainer}>
-          <Button style={accountStyles.button} accessoryLeft={<Icon name="heart"/>} onPress={navigateFavourites}>
-            <Text style={accountStyles.text} category="s1">
-              Favourites
-            </Text>
-          </Button>
-          <Button style={accountStyles.button} accessoryLeft={<Icon name="gift" />} onPress={navigateRefer} >
-            <Text style={accountStyles.text} category="s1">
-              Refer a friend
-            </Text>
-          </Button>
-          <Button style={accountStyles.button} accessoryLeft={<Icon name="bulb" />} onPress={navigateSubmit}>
-            Submit a venue
-          </Button>
-        </Layout>
-        <Divider />
-        {renderItem("My Account", "person", navigateMyAccount)}
-        {renderItem("Settings", "settings", navigateSettings)}
-        {renderItem("Help", "question-mark-circle", navigateHelp)}
-        {renderItem("Log Out", "log-out", handleLogout)}
+    <SafeAreaView style={styles.container}>
+      <View style={styles.headerContainer}>
+        <Avatar
+          source={require("../../assets/account.png")}
+          style={styles.avatar}
+          size="giant"
+        />
+        <Text category="h1">{userData ? userData.fullName : "Loading..."}</Text>
+      </View>
+      <Layout style={styles.buttonContainer}>
+        <SquareButton text="Favourites" iconName="heart" onPress={navigateFavourites} />
+        <SquareButton text="Refer a friend" iconName="gift" onPress={navigateRefer} />
+        <SquareButton text="Submit a venue" iconName="bulb" onPress={navigateSubmit} />
       </Layout>
+      {renderItem("My Account", "person", navigateMyAccount)}
+      {renderItem("Settings", "settings", navigateSettings)}
+      {renderItem("Help", "question-mark-circle", navigateHelp)}
+      {renderItem("Log Out", "log-out", handleLogout)}
+      
     </SafeAreaView>
   );
 };
 
-const accountStyles = StyleSheet.create({
+const createStyles = (theme) => StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    backgroundColor: theme["background-basic-color-1"],
   },
   headerContainer: {
     alignItems: "center",
@@ -141,8 +133,9 @@ const accountStyles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginVertical: 12,
-    height: "12%",
+    paddingHorizontal: 8,
+    marginVertical: 16,
+    // height: "12%",
   },
   button: {
     flex: 1,
@@ -156,7 +149,7 @@ const accountStyles = StyleSheet.create({
   list: {
     flexDirection: "row",
     justifyContent: "left",
-    marginVertical: 12,
+    paddingHorizontal: 16,
   },
   text: {
     textAlign: "center",
