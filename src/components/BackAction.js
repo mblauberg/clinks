@@ -7,6 +7,8 @@ const navigateBack = (navigation) => {
   navigation.goBack();
 };
 
-export const BackAction = (navigation) => (
+const BackAction = (navigation) => (
   <TopNavigationAction icon={backIcon} onPress={() => navigateBack(navigation)} />
 );
+
+export default BackAction;

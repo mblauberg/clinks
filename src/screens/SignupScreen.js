@@ -10,7 +10,7 @@ import { Input, Button, Layout, Text, TopNavigation, Icon } from "@ui-kitten/com
 import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../services/Firebase";
-import { BackAction } from "../components/BackAction";
+import BackAction from "../components/BackAction";
 
 const SignupScreen = ({ navigation }) => {
   // Check if field is filled

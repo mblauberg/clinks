@@ -7,7 +7,7 @@ import {
   Text,
   TopNavigation,
 } from "@ui-kitten/components";
-import { BackAction } from "../components/BackAction";
+import BackAction from "../components/BackAction";
 import HeartAction from "../components/HeartAction";
 
 const AddressIcon = (props) => <Icon {...props} name="pin-outline" />;

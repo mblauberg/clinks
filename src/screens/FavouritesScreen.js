@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { Layout, Text, TopNavigation, useTheme } from "@ui-kitten/components";
-import { BackAction } from "../components/BackAction";
+import BackAction from "../components/BackAction";
 
 const FavouritesScreen = ({ navigation }) => {
   const theme = useTheme();
