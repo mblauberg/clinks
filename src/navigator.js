@@ -7,7 +7,6 @@ import { BottomNavigation, BottomNavigationTab, Icon } from "@ui-kitten/componen
 import HomeScreen from "./screens/HomeScreen";
 import SafetyScreen from "./screens/SafetyScreen";
 import AccountScreen from "./screens/AccountScreen";
-import DetailsScreen from "./screens/DetailsScreen";
 import VenueScreen from "./screens/VenueScreen";
 import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignupScreen";
@@ -25,7 +24,6 @@ const AccountStack = createStackNavigator();
 const HomeNavigator = () => (
   <HomeStack.Navigator screenOptions={{ headerShown: false }}>
     <HomeStack.Screen name="Home" component={HomeScreen} />
-    <HomeStack.Screen name="Details" component={DetailsScreen} />
     <HomeStack.Screen name="Venue" component={VenueScreen} />
     {/* Additional screens can be added here */}
   </HomeStack.Navigator>

@@ -7,8 +7,8 @@ const SafetyScreen = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation alignment="center" />
       <Divider />
-      <Layout style={safetyStyles.screenContainer}>
-        <Text style={safetyStyles.screenText}>Stay safe!!</Text>
+      <Layout style={styles.screenContainer}>
+        <Text style={styles.screenText}>Stay safe!!</Text>
       </Layout>
     </SafeAreaView>
   );
@@ -16,7 +16,7 @@ const SafetyScreen = ({ navigation }) => {
 
 export default SafetyScreen;
 
-const safetyStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
     alignItems: "center",
