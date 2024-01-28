@@ -6,12 +6,9 @@ import {
   Layout,
   Text,
   TopNavigation,
-  TopNavigationAction,
 } from "@ui-kitten/components";
-
 import { BackAction } from "../components/BackAction";
-
-const HeartIcon = (props) => <Icon {...props} name={props.filled ? "heart" : "heart-outline"} />;
+import HeartAction from "../components/HeartAction";
 
 const AddressIcon = (props) => <Icon {...props} name="pin-outline" />;
 
@@ -20,19 +17,8 @@ const ClockIcon = (props) => <Icon {...props} name="clock-outline" />;
 const WebIcon = (props) => <Icon {...props} name="globe-outline" />;
 
 const VenueScreen = ({ navigation }) => {
-  const [heartFilled, setHeartFilled] = useState(false);
 
-  const toggleHeart = () => {
-    setHeartFilled(!heartFilled);
-  };
-
-  const HeartAction = () => (
-    <TopNavigationAction
-      icon={(props) => <HeartIcon {...props} filled={heartFilled} />}
-      onPress={toggleHeart}
-    />
-  );
-
+  // Dummy data for venue info
   const venueInfo = {
     address: "123 Venue St, City",
     openUntil: "10:00 PM",
@@ -45,11 +31,7 @@ const VenueScreen = ({ navigation }) => {
         title="Venue"
         alignment="center"
         accessoryLeft={() => BackAction(navigation)}
-        accessoryRight={() => (
-          <View style={styles.heartContainer}>
-            <HeartAction />
-          </View>
-        )}
+        accessoryRight={<HeartAction />}
       />
       <Divider />
       <ScrollView>

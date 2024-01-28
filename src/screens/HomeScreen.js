@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, SafeAreaView, ScrollView } from "react-native";
 import { Layout, TopNavigation, useTheme } from "@ui-kitten/components";
 import PromoPager from "../components/PromoPager";
