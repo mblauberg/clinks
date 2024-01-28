@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, SafeAreaView, View } from "react-native";
-import { Layout, Text, Divider, Avatar, Button, Icon, ListItem, useTheme } from "@ui-kitten/components";
+import {
+  Layout,
+  Text,
+  Divider,
+  Avatar,
+  Button,
+  Icon,
+  ListItem,
+  useTheme,
+} from "@ui-kitten/components";
 import { signOut } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
-import { auth, db } from "../services/firebase";
+import { auth, db } from "../services/Firebase";
 import SquareButton from "../components/SquareButton";
 
 const fetchUserData = async (userId) => {
@@ -24,7 +33,7 @@ const fetchUserData = async (userId) => {
   }
 };
 
-export const AccountScreen = ({ navigation }) => {
+const AccountScreen = ({ navigation }) => {
   const theme = useTheme();
   const styles = createStyles(theme);
 
@@ -91,11 +100,7 @@ export const AccountScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
-        <Avatar
-          source={require("../../assets/account.png")}
-          style={styles.avatar}
-          size="giant"
-        />
+        <Avatar source={require("../../assets/account.png")} style={styles.avatar} size="giant" />
         <Text category="h1">{userData ? userData.fullName : "Loading..."}</Text>
       </View>
       <Layout style={styles.buttonContainer}>
@@ -107,51 +112,53 @@ export const AccountScreen = ({ navigation }) => {
       {renderItem("Settings", "settings", navigateSettings)}
       {renderItem("Help", "question-mark-circle", navigateHelp)}
       {renderItem("Log Out", "log-out", handleLogout)}
-      
     </SafeAreaView>
   );
 };
 
-const createStyles = (theme) => StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: theme["background-basic-color-1"],
-  },
-  headerContainer: {
-    alignItems: "center",
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    marginTop: 32,
-  },
-  avatar: {
-    width: 124,
-    height: 124,
-    resizeMode: "contain",
-    alignSelf: "center",
-    marginBottom: 24,
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: 8,
-    marginVertical: 16,
-    // height: "12%",
-  },
-  button: {
-    flex: 1,
-    flexDirection: "column",
-    paddingHorizontal: 4,
-    marginHorizontal: 8,
-    borderRadius: 24,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  list: {
-    flexDirection: "row",
-    justifyContent: "left",
-    paddingHorizontal: 16,
-  },
-  text: {
-    textAlign: "center",
-  },
-});
+export default AccountScreen;
+
+const createStyles = (theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme["background-basic-color-1"],
+    },
+    headerContainer: {
+      alignItems: "center",
+      paddingVertical: 8,
+      paddingHorizontal: 16,
+      marginTop: 32,
+    },
+    avatar: {
+      width: 124,
+      height: 124,
+      resizeMode: "contain",
+      alignSelf: "center",
+      marginBottom: 24,
+    },
+    buttonContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      paddingHorizontal: 8,
+      marginVertical: 16,
+      // height: "12%",
+    },
+    button: {
+      flex: 1,
+      flexDirection: "column",
+      paddingHorizontal: 4,
+      marginHorizontal: 8,
+      borderRadius: 24,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    list: {
+      flexDirection: "row",
+      justifyContent: "left",
+      paddingHorizontal: 16,
+    },
+    text: {
+      textAlign: "center",
+    },
+  });

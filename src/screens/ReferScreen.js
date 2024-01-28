@@ -3,25 +3,27 @@ import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { Layout, Text, TopNavigation, useTheme } from "@ui-kitten/components";
 import { BackAction } from "../components/BackAction";
 
-export const SubmitScreen = ({ navigation }) => {
+const ReferScreen = ({ navigation }) => {
   const theme = useTheme();
   const styles = createStyles(theme);
 
   return (
     <SafeAreaView style={styles.container}>
       <TopNavigation
-        title="Submit a Venue"
+        title="Refer a Friend"
         alignment="center"
         accessoryLeft={() => BackAction(navigation)}
       />
       <ScrollView style={styles.container}>
         <Layout style={{ flex: 1 }}>
-          <Text category="h1">Submit</Text>
+          <Text category="h1">Refer</Text>
         </Layout>
       </ScrollView>
     </SafeAreaView>
   );
 };
+
+export default ReferScreen;
 
 const createStyles = (theme) =>
   StyleSheet.create({

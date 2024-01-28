@@ -19,7 +19,7 @@ const ClockIcon = (props) => <Icon {...props} name="clock-outline" />;
 
 const WebIcon = (props) => <Icon {...props} name="globe-outline" />;
 
-export const VenueScreen = ({ navigation }) => {
+const VenueScreen = ({ navigation }) => {
   const [heartFilled, setHeartFilled] = useState(false);
 
   const toggleHeart = () => {
@@ -85,6 +85,8 @@ export const VenueScreen = ({ navigation }) => {
     </SafeAreaView>
   );
 };
+
+export default VenueScreen;
 
 const styles = StyleSheet.create({
   heartContainer: {

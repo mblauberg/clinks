@@ -2,11 +2,7 @@ import React from "react";
 import { StyleSheet, SafeAreaView } from "react-native";
 import { Layout, Text, TopNavigation, Divider } from "@ui-kitten/components";
 
-export const SafetyScreen = ({ navigation }) => {
-  // const navigateDetails = () => {
-  //     navigation.navigate('Details');
-  // };
-
+const SafetyScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation alignment="center" />
@@ -17,6 +13,8 @@ export const SafetyScreen = ({ navigation }) => {
     </SafeAreaView>
   );
 };
+
+export default SafetyScreen;
 
 const safetyStyles = StyleSheet.create({
   screenContainer: {

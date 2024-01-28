@@ -9,10 +9,10 @@ import { Input, Button, Layout, Text, TopNavigation, Icon } from "@ui-kitten/com
 
 import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-import { auth, db } from "../services/firebase";
+import { auth, db } from "../services/Firebase";
 import { BackAction } from "../components/BackAction";
 
-export const SignupScreen = ({ navigation }) => {
+const SignupScreen = ({ navigation }) => {
   // Check if field is filled
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isFullNameValid, setIsFullNameValid] = useState(true);
@@ -150,6 +150,8 @@ export const SignupScreen = ({ navigation }) => {
     </SafeAreaView>
   );
 };
+
+export default SignupScreen;
 
 const styles = StyleSheet.create({
   container: {

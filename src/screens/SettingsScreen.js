@@ -4,7 +4,7 @@ import { Layout, Text, TopNavigation, useTheme } from "@ui-kitten/components";
 import { BackAction } from "../components/BackAction";
 import { ThemeContext } from "../theme-context";
 
-export const SettingsScreen = ({ navigation }) => {
+const SettingsScreen = ({ navigation }) => {
   const theme = useTheme();
   const styles = createStyles(theme);
 
@@ -26,6 +26,8 @@ export const SettingsScreen = ({ navigation }) => {
     </SafeAreaView>
   );
 };
+
+export default SettingsScreen;
 
 const createStyles = (theme) =>
   StyleSheet.create({

@@ -6,10 +6,10 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import { Input, Button, Layout, Text, Icon } from "@ui-kitten/components";
-import { auth } from "../services/firebase";
+import { auth } from "../services/Firebase";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 
-export const LoginScreen = ({ navigation }) => {
+const LoginScreen = ({ navigation }) => {
   const navigateSignup = () => {
     navigation.navigate("Signup");
   };
@@ -92,6 +92,8 @@ export const LoginScreen = ({ navigation }) => {
     </SafeAreaView>
   );
 };
+
+export default LoginScreen;
 
 const styles = StyleSheet.create({
   container: {

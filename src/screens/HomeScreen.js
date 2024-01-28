@@ -8,7 +8,7 @@ import {
   Text,
   ViewPager,
   TopNavigation,
-  useTheme
+  useTheme,
 } from "@ui-kitten/components";
 
 const FilterIcon = (props) => (
@@ -53,7 +53,7 @@ const ViewPagerComponent = ({ data, pageIndex, onPageSelected, styles }) => {
   );
 };
 
-export const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ navigation }) => {
   // Get current theme and create styles with that theme
   const theme = useTheme();
   const styles = createStyles(theme);
@@ -116,6 +116,8 @@ export const HomeScreen = ({ navigation }) => {
     </SafeAreaView>
   );
 };
+
+export default HomeScreen;
 
 const createStyles = (theme) =>
   StyleSheet.create({

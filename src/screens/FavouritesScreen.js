@@ -3,7 +3,7 @@ import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { Layout, Text, TopNavigation, useTheme } from "@ui-kitten/components";
 import { BackAction } from "../components/BackAction";
 
-export const FavouritesScreen = ({ navigation }) => {
+const FavouritesScreen = ({ navigation }) => {
   const theme = useTheme();
   const styles = createStyles(theme);
 
@@ -22,6 +22,8 @@ export const FavouritesScreen = ({ navigation }) => {
     </SafeAreaView>
   );
 };
+
+export default FavouritesScreen;
 
 const createStyles = (theme) =>
   StyleSheet.create({

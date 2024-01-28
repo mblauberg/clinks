@@ -4,19 +4,19 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { BottomNavigation, BottomNavigationTab, Icon } from "@ui-kitten/components";
 
-import { HomeScreen } from "./screens/home";
-import { SafetyScreen } from "./screens/safety";
-import { AccountScreen } from "./screens/account";
-import { DetailsScreen } from "./screens/details";
-import { VenueScreen } from "./screens/venue";
-import { LoginScreen } from "./screens/login";
-import { SignupScreen } from "./screens/signup";
-import { FavouritesScreen } from "./screens/favourites";
-import { ReferScreen } from "./screens/refer";
-import { SubmitScreen } from "./screens/submit";
-import { MyAccountScreen } from "./screens/myaccount";
-import { SettingsScreen } from "./screens/settings";
-import { HelpScreen } from "./screens/help";
+import HomeScreen from "./screens/HomeScreen";
+import SafetyScreen from "./screens/SafetyScreen";
+import AccountScreen from "./screens/AccountScreen";
+import DetailsScreen from "./screens/DetailsScreen";
+import VenueScreen from "./screens/VenueScreen";
+import LoginScreen from "./screens/LoginScreen";
+import SignupScreen from "./screens/SignupScreen";
+import FavouritesScreen from "./screens/FavouritesScreen";
+import ReferScreen from "./screens/ReferScreen";
+import SubmitScreen from "./screens/SubmitScreen";
+import MyAccountScreen from "./screens/MyAccountScreen";
+import SettingsScreen from "./screens/SettingsScreen";
+import HelpScreen from "./screens/HelpScreen";
 
 const HomeStack = createStackNavigator();
 const SafetyStack = createStackNavigator();
@@ -83,8 +83,10 @@ const TabNavigator = () => (
   </Navigator>
 );
 
-export const AppNavigator = () => (
+const AppNavigator = () => (
   <NavigationContainer>
     <TabNavigator />
   </NavigationContainer>
 );
+
+export default AppNavigator;
