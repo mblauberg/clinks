@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { initializeAuth, getReactNativePersistence } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -25,13 +25,31 @@ if (getApps().length === 0) {
   app = getApp();
 }
 
-// Initialize Firebase Auth
+// Initialize Firebase Auth (for user authentication)
 const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(AsyncStorage),
 });
 
-export { auth };
-
 // Initialize Firestore
 const db = getFirestore(app);
-export { db };
+
+// Get current user data from Firestore
+const fetchUserData = async (userId) => {
+  try {
+    const userDocRef = doc(db, "users", userId);
+    const userDoc = await getDoc(userDocRef);
+
+    if (userDoc.exists) {
+      console.log(userDoc.data());
+      return userDoc.data(); // This will return the user data object
+    } else {
+      console.log("No user data found!");
+      return null; // Handle the case where the user data doesn't exist
+    }
+  } catch (error) {
+    console.error("Error fetching user data: ", error);
+    return null; // Handle the error appropriately
+  }
+};
+
+export { auth, db, fetchUserData };

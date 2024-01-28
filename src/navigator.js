@@ -13,7 +13,7 @@ import SignupScreen from "./screens/SignupScreen";
 import FavouritesScreen from "./screens/FavouritesScreen";
 import ReferScreen from "./screens/ReferScreen";
 import SubmitScreen from "./screens/SubmitScreen";
-import MyAccountScreen from "./screens/MyAccountScreen";
+import AccountInfoScreen from "./screens/AccountInfoScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import HelpScreen from "./screens/HelpScreen";
 
@@ -44,7 +44,7 @@ const AccountNavigator = () => (
     <AccountStack.Screen name="Favourites" component={FavouritesScreen} />
     <AccountStack.Screen name="Refer" component={ReferScreen} />
     <AccountStack.Screen name="Submit" component={SubmitScreen} />
-    <AccountStack.Screen name="MyAccount" component={MyAccountScreen} />
+    <AccountStack.Screen name="AccountInfo" component={AccountInfoScreen} />
     <AccountStack.Screen name="Settings" component={SettingsScreen} />
     <AccountStack.Screen name="Help" component={HelpScreen} />
     {/* Additional screens can be added here */}

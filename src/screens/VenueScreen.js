@@ -1,12 +1,6 @@
-import React, { useState } from "react";
-import { SafeAreaView, ScrollView, StyleSheet, View, Image } from "react-native";
-import {
-  Divider,
-  Icon,
-  Layout,
-  Text,
-  TopNavigation,
-} from "@ui-kitten/components";
+import React from "react";
+import { SafeAreaView, ScrollView, StyleSheet, Image } from "react-native";
+import { Divider, Icon, Layout, Text, TopNavigation, useTheme } from "@ui-kitten/components";
 import BackAction from "../components/BackAction";
 import HeartAction from "../components/HeartAction";
 
@@ -17,7 +11,10 @@ const ClockIcon = (props) => <Icon {...props} name="clock-outline" />;
 const WebIcon = (props) => <Icon {...props} name="globe-outline" />;
 
 const VenueScreen = ({ navigation }) => {
-
+  // Get current theme and create styles with that theme
+  const theme = useTheme();
+  const styles = createStyles(theme);
+  
   // Dummy data for venue info
   const venueInfo = {
     address: "123 Venue St, City",
@@ -26,12 +23,12 @@ const VenueScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.screen}>
       <TopNavigation
         title="Venue"
         alignment="center"
         accessoryLeft={() => BackAction(navigation)}
-        accessoryRight={<HeartAction />}
+        accessoryRight=<HeartAction />
       />
       <Divider />
       <ScrollView>
@@ -70,7 +67,10 @@ const VenueScreen = ({ navigation }) => {
 
 export default VenueScreen;
 
-const styles = StyleSheet.create({
+const createStyles = (theme) => StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: theme["background-basic-color-1"],  },
   heartContainer: {
     flexDirection: "row",
     justifyContent: "space-between",

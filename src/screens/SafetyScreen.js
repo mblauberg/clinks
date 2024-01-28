@@ -92,7 +92,7 @@ const createStyles = (theme) => StyleSheet.create({
     marginBottom: 32,
   },
   locationText: {
-    alignSelf: 'left',
+    alignSelf: 'flex-start',
     marginTop: 24,
     marginLeft: 24,
   },

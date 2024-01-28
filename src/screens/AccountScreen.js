@@ -1,37 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, SafeAreaView, View } from "react-native";
-import {
-  Layout,
-  Text,
-  Divider,
-  Avatar,
-  Button,
-  Icon,
-  ListItem,
-  useTheme,
-} from "@ui-kitten/components";
+import { Layout, Text, Avatar, Icon, ListItem, useTheme } from "@ui-kitten/components";
 import { signOut } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
-import { auth, db } from "../services/Firebase";
+import { auth, fetchUserData } from "../services/Firebase";
 import SquareButton from "../components/SquareButton";
-
-const fetchUserData = async (userId) => {
-  try {
-    const userDocRef = doc(db, "users", userId);
-    const userDoc = await getDoc(userDocRef);
-
-    if (userDoc.exists) {
-      console.log(userDoc.data());
-      return userDoc.data(); // This will return the user data object
-    } else {
-      console.log("No user data found!");
-      return null; // Handle the case where the user data doesn't exist
-    }
-  } catch (error) {
-    console.error("Error fetching user data: ", error);
-    return null; // Handle the error appropriately
-  }
-};
 
 const AccountScreen = ({ navigation }) => {
   const theme = useTheme();
@@ -74,8 +46,8 @@ const AccountScreen = ({ navigation }) => {
     navigation.navigate("Submit");
   };
 
-  const navigateMyAccount = () => {
-    navigation.navigate("MyAccount");
+  const navigateAccountInfo = () => {
+    navigation.navigate("AccountInfo");
   };
 
   const navigateSettings = () => {
@@ -86,12 +58,10 @@ const AccountScreen = ({ navigation }) => {
     navigation.navigate("Help");
   };
 
-  const renderItemAccessory = (style, iconName) => <Icon {...style} name={iconName} />;
-
   const renderItem = (title, iconName, onPress) => (
     <ListItem
       title={title}
-      accessoryLeft={(props) => renderItemAccessory(props, iconName)}
+      accessoryLeft={<Icon name={iconName} />}
       onPress={onPress}
       style={styles.list}
     />
@@ -108,7 +78,7 @@ const AccountScreen = ({ navigation }) => {
         <SquareButton text="Refer a friend" iconName="gift" onPress={navigateRefer} />
         <SquareButton text="Submit a venue" iconName="bulb" onPress={navigateSubmit} />
       </Layout>
-      {renderItem("My Account", "person", navigateMyAccount)}
+      {renderItem("Account Info", "person", navigateAccountInfo)}
       {renderItem("Settings", "settings", navigateSettings)}
       {renderItem("Help", "question-mark-circle", navigateHelp)}
       {renderItem("Log Out", "log-out", handleLogout)}
