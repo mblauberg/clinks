@@ -10,21 +10,7 @@ const HomeScreen = ({ navigation }) => {
   const theme = useTheme();
   const styles = createStyles(theme);
 
-  const [isFilterVisible, setIsFilterVisible] = useState(false);
-  const toggleFilter = () => {
-    setIsFilterVisible(!isFilterVisible);
-  };
-
-  const [pageIndex, setPageIndex] = useState(0);
-
-  const handlePageSelected = (index) => {
-    setPageIndex(index);
-  };
-
-  const navigateVenue = () => {
-    navigation.navigate("Venue");
-  };
-
+  // Dummy data for promo pager
   const promos = [
     { image: require("../../assets/venue_1.png"), text: "Promo 1" },
     { image: require("../../assets/club_1.png"), text: "Promo 2" },
@@ -34,15 +20,10 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <TopNavigation
-        alignment="center"
-        accessoryRight={() => (
-          <SearchBar onFilterPress={toggleFilter} isFilterVisible={isFilterVisible} />
-        )}
-      />
+      <TopNavigation alignment="center" accessoryRight={() => <SearchBar />} />
       <ScrollView style={styles.scrollContainer}>
         <Layout style={{ flex: 1 }}>
-          <PromoPager data={promos} pageIndex={pageIndex} onPageSelected={handlePageSelected} />
+          <PromoPager data={promos} />
           <VenueCard navigation={navigation} />
         </Layout>
       </ScrollView>

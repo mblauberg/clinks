@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Image } from "react-native";
 import { Layout, Text, ViewPager } from "@ui-kitten/components";
 
-const PromoPager = ({ data, pageIndex, onPageSelected }) => {
+const PromoPager = ({ data }) => {
+  const [pageIndex, setPageIndex] = useState(0);
+
+  const handlePageSelected = (index) => {
+    setPageIndex(index);
+  };
+
   return (
     <ViewPager
       style={styles.viewPager}
       selectedIndex={pageIndex}
-      onSelect={(index) => onPageSelected(index)}
+      onSelect={(index) => handlePageSelected(index)}
     >
       {data.map((item, index) => (
         <Layout key={index} style={styles.page}>
@@ -36,7 +42,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     resizeMode: "cover",
-    borderRadius: 16,
+    borderRadius: 8,
   },
   textOverlay: {
     zIndex: 1,

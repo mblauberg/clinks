@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Icon, Input, Layout, Text, useTheme } from "@ui-kitten/components";
 
@@ -8,9 +8,14 @@ const FilterIcon = (props) => (
   </TouchableOpacity>
 );
 
-const SearchBar = ({ onFilterPress, isFilterVisible }) => {
+const SearchBar = () => {
   const theme = useTheme();
   styles = createStyles(theme);
+
+  const [isFilterVisible, setIsFilterVisible] = useState(false);
+  const toggleFilter = () => {
+    setIsFilterVisible(!isFilterVisible);
+  };
 
   return (
     <Layout style={styles.searchContainer}>
@@ -18,7 +23,7 @@ const SearchBar = ({ onFilterPress, isFilterVisible }) => {
         style={styles.searchInput}
         placeholder="Search..."
         accessoryLeft={(props) => <Icon {...props} name="search-outline" />}
-        accessoryRight={(props) => <FilterIcon {...props} onPress={onFilterPress} />}
+        accessoryRight={(props) => <FilterIcon {...props} onPress={toggleFilter} />}
       />
       {isFilterVisible && (
         <Layout style={styles.filterContainer}>
