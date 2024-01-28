@@ -1,39 +1,9 @@
 import React, { useState } from "react";
-import { StyleSheet, SafeAreaView, TouchableOpacity, ScrollView } from "react-native";
-import {
-  Layout,
-  Input,
-  Button,
-  Icon,
-  Text,
-  TopNavigation,
-  useTheme,
-} from "@ui-kitten/components";
+import { StyleSheet, SafeAreaView, ScrollView } from "react-native";
+import { Layout, TopNavigation, useTheme } from "@ui-kitten/components";
 import PromoPager from "../components/PromoPager";
 import VenueCard from "../components/VenueCard";
-
-const FilterIcon = (props) => (
-  <TouchableOpacity onPress={props.onPress}>
-    <Icon {...props} name="options-2" />
-  </TouchableOpacity>
-);
-
-const SearchBar = ({ onFilterPress, isFilterVisible, styles }) => (
-  <Layout style={styles.searchContainer}>
-    <Input
-      style={styles.searchInput}
-      placeholder="Search..."
-      accessoryLeft={(props) => <Icon {...props} name="search-outline" />}
-      accessoryRight={(props) => <FilterIcon {...props} onPress={onFilterPress} />}
-    />
-    {isFilterVisible && (
-      <Layout style={styles.filterContainer}>
-        {/* Filter options */}
-        <Text>Filter options...</Text>
-      </Layout>
-    )}
-  </Layout>
-);
+import SearchBar from "../components/SearchBar";
 
 const HomeScreen = ({ navigation }) => {
   // Get current theme and create styles with that theme
@@ -68,20 +38,15 @@ const HomeScreen = ({ navigation }) => {
       <TopNavigation
         alignment="center"
         accessoryRight={() => (
-          <SearchBar
-            onFilterPress={toggleFilter}
-            isFilterVisible={isFilterVisible}
-            styles={styles}
-          />
+          <SearchBar onFilterPress={toggleFilter} isFilterVisible={isFilterVisible} />
         )}
       />
       <ScrollView style={styles.scrollContainer}>
         <Layout style={{ flex: 1 }}>
           <PromoPager data={promos} pageIndex={pageIndex} onPageSelected={handlePageSelected} />
-          <VenueCard navigation={navigation}/>
+          <VenueCard navigation={navigation} />
         </Layout>
       </ScrollView>
-
     </SafeAreaView>
   );
 };
@@ -99,23 +64,5 @@ const createStyles = (theme) =>
       paddingHorizontal: 16,
       flexDirection: "column",
       backgroundColor: theme["background-basic-color-1"],
-    },
-    searchContainer: {
-      flex: 1,
-      flexDirection: "column",
-      alignItems: "center",
-    },
-    searchInput: {
-      width: "100%",
-      borderRadius: "100%",
-    },
-    filterContainer: {
-      width: "100%",
-      backgroundColor: theme["background-basic-color-2"],
-    },
-    button: {
-      marginVertical: 8,
-      paddingVertical: 8,
-      borderRadius: 12,
     },
   });
