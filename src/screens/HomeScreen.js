@@ -11,7 +11,6 @@ const HomeScreen = ({ navigation }) => {
   const styles = createStyles(theme);
 
   const [isFilterVisible, setIsFilterVisible] = useState(false);
-
   const toggleFilter = () => {
     setIsFilterVisible(!isFilterVisible);
   };
