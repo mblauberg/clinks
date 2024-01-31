@@ -1,6 +1,6 @@
 import * as Location from "expo-location";
 
-const fetchLocation = async () => {
+export const fetchLocation = async () => {
   try {
     // Request permission to access location
     const { status } = await Location.requestForegroundPermissionsAsync();
@@ -18,7 +18,7 @@ const fetchLocation = async () => {
   }
 };
 
-const fetchNearbyPlaces = async (latitude, longitude) => {
+export const fetchNearbyPlaces = async (latitude, longitude) => {
   const url = 'https://places.googleapis.com/v1/places:searchNearby';
   const apiKey = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
   const requestData = {
@@ -43,7 +43,7 @@ const fetchNearbyPlaces = async (latitude, longitude) => {
       headers: {
         'Content-Type': 'application/json',
         'X-Goog-Api-Key': apiKey,
-        'X-Goog-FieldMask': 'places.photos,places.displayName,places.rating,places.userRatingCount,places.primaryTypeDisplayName,places.location,places.businessStatus'
+        'X-Goog-FieldMask': 'places.id,places.photos,places.displayName,places.rating,places.userRatingCount,places.primaryTypeDisplayName,places.location,places.businessStatus'
       },
       body: JSON.stringify(requestData)
     });
@@ -56,4 +56,4 @@ const fetchNearbyPlaces = async (latitude, longitude) => {
   }
 };
 
-export { fetchLocation, fetchNearbyPlaces };
+

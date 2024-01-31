@@ -10,32 +10,29 @@ const ClockIcon = (props) => <Icon {...props} name="clock-outline" />;
 
 const WebIcon = (props) => <Icon {...props} name="globe-outline" />;
 
-const VenueScreen = ({ navigation, venue }) => {
+const VenueScreen = ({ route, navigation }) => {
   // Get current theme and create styles with that theme
   const theme = useTheme();
   const styles = createStyles(theme);
+
+  // Get already fetched venue data from route params
+  const { venueInfo } = route.params;
+
   
-  // Dummy data for venue info
-  const venueInfo = {
-    address: "123 Venue St, City",
-    openUntil: "10:00 PM",
-    website: "www.venuewebsite.com",
-  };
 
   return (
     <SafeAreaView style={styles.screen}>
       <TopNavigation
-        title="VENUE"
         alignment="center"
         accessoryLeft={() => BackAction(navigation)}
         accessoryRight=<HeartAction />
       />
       <Divider />
       <ScrollView>
-        <Image source={require("../../assets/venue_1.png")} style={styles.image} />
+        <Image source={venueInfo.image} style={styles.image} />
         <Layout style={styles.headerContainer}>
-          <Text category="h1">VENUE</Text>
-          <Text category="s2">4.5 ★ (200+)</Text>
+          <Text category="h1">{venueInfo.name}</Text>
+          <Text category="s2">{venueInfo.rating}</Text>
           <Text category="s2">$10 Entry Fee</Text>
           <Text category="s2">800m away</Text>
         </Layout>

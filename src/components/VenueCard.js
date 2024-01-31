@@ -9,17 +9,19 @@ const VenueCard = ({ venue, navigation }) => {
   // Display image
   const photoReference = venue.photos && venue.photos[0] ? venue.photos[0].name : null;
   const imageUri = photoReference ? `https://places.googleapis.com/v1/${photoReference}/media?key=${apiKey}&maxHeightPx=300`: null;
-  const imageSource = imageUri ? { uri: imageUri } : require("../../assets/bar.png");
 
-  // Venue details
-  const name = venue.displayName.text || "Unknown";
-  const rating = (venue.rating || 'N/A') + "★ (" + (venue.userRatingCount || "N/A") + "+)";
-  const distance = "1.2 km";
-  const type = venue.primaryTypeDisplayName.text;
-  console.log(venue);
+  // Venue info
+  const venueInfo = {
+    id: venue.id,
+    name: venue.displayName.text || "Unknown",
+    image: imageUri ? { uri: imageUri } : require("../../assets/bar.png"),
+    rating: (venue.rating || 'N/A') + "★ (" + (venue.userRatingCount || "N/A") + "+)",
+    distance: "1.2 km",
+    type: venue.primaryTypeDisplayName.text,
+  };
 
   const navigateVenue = () => {
-    navigation.navigate("Venue");
+    navigation.navigate("Venue", { venueInfo: venueInfo });
   };
 
   return (
@@ -27,12 +29,12 @@ const VenueCard = ({ venue, navigation }) => {
       <Layout style={styles.container}>
         <Image
           style={styles.image}
-          source={ imageSource }
+          source={venueInfo.image}
         />
-        <Text category="h5">{name}</Text>
+        <Text category="h5">{venueInfo.name}</Text>
         <Layout style={styles.infoContainer}>
-          <Text category="s1">{distance} • {type}</Text>
-          <Text category="s1">{rating}</Text>
+          <Text category="s1">{venueInfo.distance} • {venueInfo.type}</Text>
+          <Text category="s1">{venueInfo.rating}</Text>
         </Layout>
       </Layout>
     </TouchableOpacity>
