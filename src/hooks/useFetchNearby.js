@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { fetchLocation, fetchNearbyPlaces } from '../services/Location';
 
-const useFetchVenues = () => {
+const useFetchNearby = () => {
   const [venues, setVenues] = useState([]);
   const [errorMsg, setErrorMsg] = useState(null);
 
@@ -28,4 +28,4 @@ const useFetchVenues = () => {
   return { venues, errorMsg };
 };
 
-export default useFetchVenues;
+export default useFetchNearby;

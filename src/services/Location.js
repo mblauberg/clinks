@@ -19,7 +19,7 @@ export const fetchLocation = async () => {
 };
 
 export const fetchNearbyPlaces = async (latitude, longitude) => {
-  const url = 'https://places.googleapis.com/v1/places:searchNearby';
+  const url = "https://places.googleapis.com/v1/places:searchNearby";
   const apiKey = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
   const requestData = {
     includedTypes: ["bar", "night_club", "casino"],
@@ -30,30 +30,51 @@ export const fetchNearbyPlaces = async (latitude, longitude) => {
       circle: {
         center: {
           latitude: latitude,
-          longitude: longitude
+          longitude: longitude,
         },
-        radius: 5000.0
-      }
-    }
+        radius: 5000.0,
+      },
+    },
   };
 
   try {
     const response = await fetch(url, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'X-Goog-Api-Key': apiKey,
-        'X-Goog-FieldMask': 'places.id,places.photos,places.displayName,places.rating,places.userRatingCount,places.primaryTypeDisplayName,places.location,places.businessStatus'
+        "Content-Type": "application/json",
+        "X-Goog-Api-Key": apiKey,
+        "X-Goog-FieldMask":
+          "places.id,places.photos,places.displayName,places.rating,places.userRatingCount,places.primaryTypeDisplayName,places.location,places.businessStatus",
       },
-      body: JSON.stringify(requestData)
+      body: JSON.stringify(requestData),
     });
 
     const data = await response.json();
     return data.places; // Process the response data as needed
   } catch (error) {
-    console.error('Error fetching nearby places:', error);
+    console.error("Error fetching nearby places:", error);
     return null; // Handle errors appropriately
   }
 };
 
+export const fetchPlaceDetails = async (placeId) => {
+  const url = `https://places.googleapis.com/v1/places/${placeId}`;
+  const apiKey = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
 
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Goog-Api-Key": apiKey,
+        "X-Goog-FieldMask": "*",
+      },
+    });
+
+    const data = await response.json();
+    return data; // Process the response data as needed
+  } catch (error) {
+    console.error("Error fetching place details:", error);
+    return null; // Handle errors appropriately
+  }
+};

@@ -4,7 +4,7 @@ import { Layout, TopNavigation, useTheme } from "@ui-kitten/components";
 import PromoPager from "../components/PromoPager";
 import VenueCard from "../components/VenueCard";
 import SearchBar from "../components/SearchBar";
-import useFetchVenues from "../hooks/useFetchVenues";
+import useFetchNearby from "../hooks/useFetchNearby";
 
 const HomeScreen = ({ navigation }) => {
   // Get current theme and create styles with that theme
@@ -20,7 +20,7 @@ const HomeScreen = ({ navigation }) => {
   ];
 
   // Fetch nearby venues hook
-  const { venues, errorMsg } = useFetchVenues();
+  const { venues, errorMsg } = useFetchNearby();
 
   // Handle errors from fetching venues
   if (errorMsg) {
