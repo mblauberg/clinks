@@ -23,8 +23,9 @@ export const fetchNearbyPlaces = async (latitude, longitude) => {
   const apiKey = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
   const requestData = {
     includedTypes: ["bar", "night_club", "casino"],
-    excludedTypes: ["hostel", "bakery", "meal_takeaway", "meal_delivery"],
-    maxResultCount: 15,
+    excludedTypes: ["hostel", "bakery"],
+    excludedPrimaryTypes: ["restaurant", "american_restaurant", "mexican_restaurant"],
+    maxResultCount: 20,
     rankPreference: "DISTANCE",
     locationRestriction: {
       circle: {
@@ -44,7 +45,7 @@ export const fetchNearbyPlaces = async (latitude, longitude) => {
         "Content-Type": "application/json",
         "X-Goog-Api-Key": apiKey,
         "X-Goog-FieldMask":
-          "places.id,places.photos,places.displayName,places.rating,places.userRatingCount,places.primaryTypeDisplayName,places.location,places.businessStatus",
+          "places.id,places.photos,places.displayName,places.rating,places.userRatingCount,places.primaryTypeDisplayName,places.location,places.businessStatus,places.currentOpeningHours",
       },
       body: JSON.stringify(requestData),
     });
