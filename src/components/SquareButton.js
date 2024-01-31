@@ -8,7 +8,7 @@ const SquareButton = ({ text, iconName, onPress }) => {
 
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
-      {iconName && <Icon name={iconName} fill={theme['text-control-color']} style={styles.icon} />}
+      {iconName && <Icon name={iconName} fill={theme['text-basic-color']} style={styles.icon} />}
       <Text style={styles.text} category='s1'>{text}</Text>
     </TouchableOpacity>
   );
@@ -18,7 +18,7 @@ const createStyles = (theme) => StyleSheet.create({
   button: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: theme['color-primary-default'],
+    backgroundColor: theme['background-basic-color-4'],
     borderRadius: 32,
     width: 110, 
     height: 110, 
@@ -31,7 +31,7 @@ const createStyles = (theme) => StyleSheet.create({
     marginBottom: 8,
   },
   text: {
-    color: theme['text-control-color'],
+    color: theme['text-basic-color'],
     textAlign: 'center',
     fontWeight: 'bold',
   },

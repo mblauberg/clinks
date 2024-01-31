@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, SafeAreaView, ScrollView } from "react-native";
 import { Layout, TopNavigation, useTheme } from "@ui-kitten/components";
 import PromoPager from "../components/PromoPager";
 import VenueCard from "../components/VenueCard";
 import SearchBar from "../components/SearchBar";
+import { fetchLocation, fetchNearbyPlaces } from "../services/Location";
 
 const HomeScreen = ({ navigation }) => {
   // Get current theme and create styles with that theme
@@ -18,13 +19,42 @@ const HomeScreen = ({ navigation }) => {
     { image: require("../../assets/bar.png"), text: "Promo 4" },
   ];
 
+  const [venues, setVenues] = useState([]);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  useEffect(() => {
+    const getVenues = async () => {
+      try {
+        const location = await fetchLocation();
+        if (location) {
+          const { latitude, longitude } = location.coords;
+          const nearbyVenues = await fetchNearbyPlaces(latitude, longitude);
+          setVenues(nearbyVenues);
+        } else {
+          setErrorMsg("Failed to fetch location");
+        }
+      } catch (error) {
+        setErrorMsg("An error occurred");
+        console.error(error);
+      }
+    };
+
+    getVenues();
+  }, []);
+
+  if (errorMsg) {
+    return <View><Text>Error: {errorMsg}</Text></View>;
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <TopNavigation alignment="center" accessoryRight={() => <SearchBar />} />
       <ScrollView style={styles.scrollContainer}>
         <Layout style={{ flex: 1 }}>
           <PromoPager data={promos} />
-          <VenueCard navigation={navigation} />
+          {venues && venues.map((venue, index) => (
+            <VenueCard key={index}  venue={venue} navigation={navigation}/>
+          ))}
         </Layout>
       </ScrollView>
     </SafeAreaView>

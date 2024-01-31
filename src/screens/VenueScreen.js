@@ -10,7 +10,7 @@ const ClockIcon = (props) => <Icon {...props} name="clock-outline" />;
 
 const WebIcon = (props) => <Icon {...props} name="globe-outline" />;
 
-const VenueScreen = ({ navigation }) => {
+const VenueScreen = ({ navigation, venue }) => {
   // Get current theme and create styles with that theme
   const theme = useTheme();
   const styles = createStyles(theme);
@@ -25,7 +25,7 @@ const VenueScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.screen}>
       <TopNavigation
-        title="Venue"
+        title="VENUE"
         alignment="center"
         accessoryLeft={() => BackAction(navigation)}
         accessoryRight=<HeartAction />
