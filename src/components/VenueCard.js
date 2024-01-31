@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Layout, Text } from "@ui-kitten/components";
 
+
 const apiKey = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
 
 const VenueCard = ({ venue, navigation }) => {
@@ -13,10 +14,9 @@ const VenueCard = ({ venue, navigation }) => {
   // Venue details
   const name = venue.displayName.text || "Unknown";
   const rating = (venue.rating || 'N/A') + "★ (" + (venue.userRatingCount || "N/A") + "+)";
-  //const price = venue.priceLevel || "";
-  const image = require("../../assets/bar.png");
   const distance = "1.2 km";
-  const type = venue.primaryType;
+  const type = venue.primaryTypeDisplayName.text;
+  console.log(venue);
 
   const navigateVenue = () => {
     navigation.navigate("Venue");

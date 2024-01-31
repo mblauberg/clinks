@@ -4,7 +4,7 @@ import { Layout, TopNavigation, useTheme } from "@ui-kitten/components";
 import PromoPager from "../components/PromoPager";
 import VenueCard from "../components/VenueCard";
 import SearchBar from "../components/SearchBar";
-import { fetchLocation, fetchNearbyPlaces } from "../services/Location";
+import useFetchVenues from "../hooks/useFetchVenues";
 
 const HomeScreen = ({ navigation }) => {
   // Get current theme and create styles with that theme
@@ -19,29 +19,10 @@ const HomeScreen = ({ navigation }) => {
     { image: require("../../assets/bar.png"), text: "Promo 4" },
   ];
 
-  const [venues, setVenues] = useState([]);
-  const [errorMsg, setErrorMsg] = useState(null);
+  // Fetch nearby venues hook
+  const { venues, errorMsg } = useFetchVenues();
 
-  useEffect(() => {
-    const getVenues = async () => {
-      try {
-        const location = await fetchLocation();
-        if (location) {
-          const { latitude, longitude } = location.coords;
-          const nearbyVenues = await fetchNearbyPlaces(latitude, longitude);
-          setVenues(nearbyVenues);
-        } else {
-          setErrorMsg("Failed to fetch location");
-        }
-      } catch (error) {
-        setErrorMsg("An error occurred");
-        console.error(error);
-      }
-    };
-
-    getVenues();
-  }, []);
-
+  // Handle errors from fetching venues
   if (errorMsg) {
     return <View><Text>Error: {errorMsg}</Text></View>;
   }

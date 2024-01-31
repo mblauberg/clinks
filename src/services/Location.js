@@ -43,13 +43,12 @@ const fetchNearbyPlaces = async (latitude, longitude) => {
       headers: {
         'Content-Type': 'application/json',
         'X-Goog-Api-Key': apiKey,
-        'X-Goog-FieldMask': '*'
+        'X-Goog-FieldMask': 'places.photos,places.displayName,places.rating,places.userRatingCount,places.primaryTypeDisplayName,places.location,places.businessStatus'
       },
       body: JSON.stringify(requestData)
     });
 
     const data = await response.json();
-    console.log('Nearby places: ', data.places);
     return data.places; // Process the response data as needed
   } catch (error) {
     console.error('Error fetching nearby places:', error);
