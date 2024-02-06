@@ -5,6 +5,7 @@ import BackAction from "../components/BackAction";
 import HeartAction from "../components/HeartAction";
 import useFetchDetails from "../hooks/useFetchDetails";
 import { titleCase } from "../utils/stringUtils";
+import { getClosingTime } from "../utils/timeUtils";
 
 const AddressIcon = (props) => <Icon {...props} name="pin-outline" />;
 
@@ -35,10 +36,10 @@ const VenueScreen = ({ route, navigation }) => {
     if (placeDetails) {
       setVenueInfo({
         ...venueInfo,
-        address: placeDetails.adrFormatAddress ? placeDetails.adrFormatAddress.replace(/<[^>]*>?/gm, '') : "N/A",
-        //openUntil: placeDetails.openingHours ? placeDetails.openingHours.periods[0].close.time : "N/A",
-        website: placeDetails.websiteUri ? placeDetails.websiteUri : "N/A",
+        address: placeDetails.adrFormatAddress ? placeDetails.adrFormatAddress.replace(/<[^>]*>?/gm, '') : null,
+        website: placeDetails.websiteUri ? placeDetails.websiteUri.split('?')[0] : null,
         types: Array.isArray(placeDetails.types) ? placeDetails.types : "N/A",
+        closingTime: getClosingTime(placeDetails.currentOpeningHours) ? getClosingTime(placeDetails.currentOpeningHours) : null,
       });
     }
   }, [placeDetails]);
@@ -63,29 +64,32 @@ const VenueScreen = ({ route, navigation }) => {
           <Text category="s2">800m away</Text>
         </Layout>
         <Divider />
-        {placeDetails && (
-          <Layout style={styles.bodyContainer}>
+        <Layout style={styles.bodyContainer}>
+          {venueInfo.address && (
             <Layout style={styles.infoContainer}>
               <AddressIcon style={styles.icon} />
-              <Text category="s1" style={{ marginLeft: 16 }}>
+              <Text category="s1" style={styles.text}>
                 {venueInfo.address}
               </Text>
             </Layout>
-            
+          )}
+          {venueInfo.closingTime && (
             <Layout style={styles.infoContainer}>
               <ClockIcon style={styles.icon} />
-              <Text category="s1" style={{ marginLeft: 16 }}>
-                Open until {venueInfo.openUntil}
+              <Text category="s1" style={styles.text}>
+                {venueInfo.closingTime}
               </Text>
             </Layout>
+          )}
+          {venueInfo.website && (
             <Layout style={styles.infoContainer}>
               <WebIcon style={styles.icon} />
-              <Text category="s1" style={{ marginLeft: 16 }}>
+              <Text category="s1" style={styles.text}>
                 {venueInfo.website}
               </Text>
             </Layout>
-          </Layout>
-        )}
+          )}
+        </Layout>
       </ScrollView>
     </SafeAreaView>
   );
@@ -120,8 +124,12 @@ const createStyles = (theme) => StyleSheet.create({
     height: 80,
     flexDirection: "row",
     alignItems: "center",
+    gap: 20,
   },
   icon: {
     marginRight: 32,
   },
+  text: {
+    flexShrink: 1,
+  }
 });

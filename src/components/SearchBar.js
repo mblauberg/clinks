@@ -2,15 +2,9 @@ import React, { useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Icon, Input, Layout, Text, useTheme } from "@ui-kitten/components";
 
-const FilterIcon = (props) => (
-  <TouchableOpacity onPress={props.onPress}>
-    <Icon {...props} name="options-2" />
-  </TouchableOpacity>
-);
-
 const SearchBar = () => {
   const theme = useTheme();
-  styles = createStyles(theme);
+  const styles = createStyles(theme);
 
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const toggleFilter = () => {
@@ -18,39 +12,47 @@ const SearchBar = () => {
   };
 
   return (
-    <Layout style={styles.searchContainer}>
+    <Layout style={styles.container}>
       <Input
         style={styles.searchInput}
+        size="large"
         placeholder="Search..."
         accessoryLeft={(props) => <Icon {...props} name="search-outline" />}
-        accessoryRight={(props) => <FilterIcon {...props} onPress={toggleFilter} />}
       />
-      {isFilterVisible && (
-        <Layout style={styles.filterContainer}>
-          {/* Filter options */}
-          <Text>Filter options...</Text>
-        </Layout>
-      )}
+      <TouchableOpacity onPress={toggleFilter} style={styles.filterContainer}> 
+        <Icon name="options-2-outline" style={styles.filterIcon} fill={theme["text-basic-color"]}/>
+      </TouchableOpacity>
     </Layout>
-)};
+  )
+};
 
 export default SearchBar;
 
 const createStyles = (theme) => StyleSheet.create({
-  searchContainer: {
+  container: {
     flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 8,
   },
   searchInput: {
-    width: "100%",
-    borderRadius: "100%",
+    flex: 1,
+    borderRadius: 25,
+    marginRight: 8,
+  },
+  filterIcon: {
+    width: 24,
+    height: 24,
+    backgroundColor: theme["background-basic-color-1"],
   },
   filterContainer: {
-    marginTop: 4,
-    padding: 8,
-    width: "100%",
-    borderRadius: 8,
-    backgroundColor: theme["background-basic-color-2"],
+    height: 50,
+    width: 50,
+    borderRadius: 25,
+    borderColor: theme["border-basic-color-4"],
+    borderWidth: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: theme["background-basic-color-1"],
   },
 });
