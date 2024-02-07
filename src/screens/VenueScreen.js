@@ -36,7 +36,7 @@ const VenueScreen = ({ route, navigation }) => {
     if (placeDetails) {
       setVenueInfo({
         ...venueInfo,
-        address: placeDetails.adrFormatAddress ? placeDetails.adrFormatAddress.replace(/<[^>]*>?/gm, '') : null,
+        address: placeDetails.adrFormatAddress ? placeDetails.adrFormatAddress.replace(/,\s*/, ',\n').replace(/<[^>]*>?/gm, '') : null,
         website: placeDetails.websiteUri ? placeDetails.websiteUri.split('?')[0] : null,
         types: Array.isArray(placeDetails.types) ? placeDetails.types : "N/A",
         closingTime: getClosingTime(placeDetails.currentOpeningHours) ? getClosingTime(placeDetails.currentOpeningHours) : null,
