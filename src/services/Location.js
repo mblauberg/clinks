@@ -39,6 +39,9 @@ export const fetchNearbyPlaces = async (latitude, longitude) => {
   };
 
   try {
+    console.log('🌐 Making Google Places API request...');
+    console.log('📍 Request data:', JSON.stringify(requestData, null, 2));
+    
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -50,10 +53,19 @@ export const fetchNearbyPlaces = async (latitude, longitude) => {
       body: JSON.stringify(requestData),
     });
 
+    console.log('📡 API Response status:', response.status);
     const data = await response.json();
+    console.log('📦 Raw API response:', JSON.stringify(data, null, 2));
+    
+    if (!response.ok) {
+      console.error('❌ API Error:', data);
+      return null;
+    }
+    
+    console.log('🏢 Places found:', data.places ? data.places.length : 0);
     return data.places; // Process the response data as needed
   } catch (error) {
-    console.error("Error fetching nearby places:", error);
+    console.error("❌ Error fetching nearby places:", error);
     return null; // Handle errors appropriately
   }
 };

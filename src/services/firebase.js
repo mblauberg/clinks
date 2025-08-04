@@ -1,13 +1,17 @@
-// Import the functions you need from the SDKs you need
+/**
+ * Firebase Configuration Service
+ * Handles Firebase initialization, authentication, and Firestore database operations
+ */
+
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { initializeAuth, getReactNativePersistence } from "firebase/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
+/**
+ * Firebase configuration object
+ * Uses environment variables for API key security
+ */
 const firebaseConfig = {
   apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
   authDomain: "klinks-27ac2.firebaseapp.com",
@@ -17,7 +21,10 @@ const firebaseConfig = {
   appId: "1:161915316544:web:5518d5b8896d9539faf2a5",
 };
 
-// Initialize Firebase
+/**
+ * Initialize Firebase App
+ * Uses singleton pattern to avoid re-initialization
+ */
 let app;
 if (getApps().length === 0) {
   app = initializeApp(firebaseConfig);
@@ -25,30 +32,39 @@ if (getApps().length === 0) {
   app = getApp();
 }
 
-// Initialize Firebase Auth (for user authentication)
+/**
+ * Initialize Firebase Auth with React Native persistence
+ * Uses AsyncStorage for offline auth state persistence
+ */
 const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(AsyncStorage),
 });
 
-// Initialize Firestore
+/**
+ * Initialize Firestore database
+ */
 const db = getFirestore(app);
 
-// Get current user data from Firestore
+/**
+ * Fetches user data from Firestore
+ * @param {string} userId - The user's unique ID
+ * @returns {Promise<Object|null>} User data object or null if not found/error
+ */
 const fetchUserData = async (userId) => {
   try {
     const userDocRef = doc(db, "users", userId);
     const userDoc = await getDoc(userDocRef);
 
-    if (userDoc.exists) {
-      console.log(userDoc.data());
-      return userDoc.data(); // This will return the user data object
+    if (userDoc.exists()) {
+      console.log("User data retrieved:", userDoc.data());
+      return userDoc.data();
     } else {
-      console.log("No user data found!");
-      return null; // Handle the case where the user data doesn't exist
+      console.log("No user data found for ID:", userId);
+      return null;
     }
   } catch (error) {
-    console.error("Error fetching user data: ", error);
-    return null; // Handle the error appropriately
+    console.error("Error fetching user data:", error);
+    return null;
   }
 };
 

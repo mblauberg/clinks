@@ -1,9 +1,15 @@
+/**
+ * VenueScreen Component
+ * Detailed view of a specific venue with additional information from Google Places API
+ * Features: venue details, contact info, hours, favorite functionality
+ */
+
 import React from "react";
-import { SafeAreaView, ScrollView, StyleSheet, Image } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, Image, View } from "react-native";
 import { Divider, Icon, Layout, Text, TopNavigation, useTheme } from "@ui-kitten/components";
 import BackAction from "../components/BackAction";
 import HeartAction from "../components/HeartAction";
-import useFetchDetails from "../hooks/useFetchDetails";
+import useFetchPlaceDetails from "../hooks/useFetchDetails";
 import { titleCase } from "../utils/stringUtils";
 import { getClosingTime } from "../utils/timeUtils";
 
@@ -13,6 +19,12 @@ const ClockIcon = (props) => <Icon {...props} name="clock-outline" />;
 
 const WebIcon = (props) => <Icon {...props} name="globe-outline" />;
 
+/**
+ * VenueScreen Component
+ * @param {Object} route - Route object containing venue information from navigation
+ * @param {Object} navigation - React Navigation object for screen transitions
+ * @returns {React.Component} Detailed venue information screen
+ */
 const VenueScreen = ({ route, navigation }) => {
   // Get current theme and create styles with that theme
   const theme = useTheme();
@@ -21,28 +33,35 @@ const VenueScreen = ({ route, navigation }) => {
   // Get already fetched venue data from route params
   const { venueInfo: initialVenueInfo } = route.params;
 
-  // Fetch venue details hook
-  const { placeDetails, errorMsg } = useFetchDetails(initialVenueInfo.id);
+  // Update venue info with details - MUST be before any conditional returns
+  const [venueInfo, setVenueInfo] = React.useState(initialVenueInfo);
 
-  // Handle errors from fetching venue details
-  if (errorMsg) {
-    return <View><Text>Error: {errorMsg}</Text></View>;
-  }
+  // Fetch venue details hook - MUST be before any conditional returns
+  const { placeDetails, errorMsg } = useFetchPlaceDetails(initialVenueInfo.id);
 
-  // Update venue info with details
-  const [venueInfo, setVenueInfo] = React.useState(initialVenueInfo)
-
+  // Update venue info when place details are loaded
   React.useEffect(() => {
     if (placeDetails) {
-      setVenueInfo({
-        ...venueInfo,
+      setVenueInfo(prevInfo => ({
+        ...prevInfo,
         address: placeDetails.adrFormatAddress ? placeDetails.adrFormatAddress.replace(/,\s*/, ',\n').replace(/<[^>]*>?/gm, '') : null,
         website: placeDetails.websiteUri ? placeDetails.websiteUri.split('?')[0] : null,
         types: Array.isArray(placeDetails.types) ? placeDetails.types : "N/A",
         closingTime: getClosingTime(placeDetails.currentOpeningHours) ? getClosingTime(placeDetails.currentOpeningHours) : null,
-      });
+      }));
     }
   }, [placeDetails]);
+
+  // Handle errors from fetching venue details - AFTER all hooks
+  if (errorMsg) {
+    return (
+      <SafeAreaView style={styles.screen}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Text>Error loading venue details: {errorMsg}</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
   
 
 

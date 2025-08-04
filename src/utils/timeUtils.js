@@ -1,27 +1,38 @@
-import { Text } from "@ui-kitten/components";
+/**
+ * Time utility functions for venue operations
+ */
 
 export const getClosingTime = (currentOpeningHours) => {
-  const today = new Date();
-  const date = today.getDate();
-
   // Check if venue is closed
   if (currentOpeningHours?.openNow === false) {
     return "Closed";
   }
 
-  // Otherwise, get the closing time
-  const periods = currentOpeningHours?.periods;
-  const todayPeriod = periods?.find((period) => period.open.date.day === date);
-  if (!todayPeriod) return "N/A"
+  // Check if opening hours data exists
+  if (!currentOpeningHours?.periods || !Array.isArray(currentOpeningHours.periods)) {
+    return "N/A";
+  }
+
+  // Get today's day of week (0 = Sunday, 1 = Monday, etc.)
+  const today = new Date();
+  const dayOfWeek = today.getDay();
+
+  // Find today's period
+  const todayPeriod = currentOpeningHours.periods.find(
+    (period) => period.open?.day === dayOfWeek
+  );
+  
+  if (!todayPeriod || !todayPeriod.close) {
+    return "Open 24/7";
+  }
 
   const closeHour = todayPeriod.close.hour;
-  const closeHourAdjusted = closeHour === 0 ? 12 : closeHour > 12 ? closeHour - 12 : closeHour; // Adjust for 12-hour format
-
-  const closeMinute = todayPeriod.close.minute;
+  const closeMinute = todayPeriod.close.minute || 0;
+  
+  // Convert to 12-hour format
+  const closeHourAdjusted = closeHour === 0 ? 12 : closeHour > 12 ? closeHour - 12 : closeHour;
   const closeMinuteFormatted = closeMinute < 10 ? `0${closeMinute}` : closeMinute;
-
   const closeTimeSuffix = closeHour >= 12 ? "PM" : "AM";
-  const closeTime = `Open until ${closeHourAdjusted}:${closeMinuteFormatted} ${closeTimeSuffix}`;
-
-  return closeTime;
+  
+  return `Open until ${closeHourAdjusted}:${closeMinuteFormatted} ${closeTimeSuffix}`;
 };

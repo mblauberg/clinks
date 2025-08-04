@@ -1,3 +1,9 @@
+/**
+ * HomeScreen Component
+ * Main screen displaying nearby nightlife venues with promotional content
+ * Features: venue discovery, search functionality, pull-to-refresh
+ */
+
 import React, { useState, useEffect } from "react";
 import { StyleSheet, SafeAreaView, ScrollView, RefreshControl } from "react-native";
 import { Layout, Text, TopNavigation, useTheme } from "@ui-kitten/components";
@@ -6,6 +12,11 @@ import VenueCard from "../components/VenueCard";
 import SearchBar from "../components/SearchBar";
 import useFetchNearby from "../hooks/useFetchNearby";
 
+/**
+ * HomeScreen Component
+ * @param {Object} navigation - React Navigation object for screen transitions
+ * @returns {React.Component} Main home screen with venue listings
+ */
 const HomeScreen = ({ navigation }) => {
   // Get current theme and create styles with that theme
   const theme = useTheme();
@@ -23,26 +34,37 @@ const HomeScreen = ({ navigation }) => {
     { image: require("../../assets/bar.png"), text: "Promo 4" },
   ];
 
-  // Fetch nearby venues hook
-  const { venues, errorMsg } = useFetchNearby(refreshTrigger);
+  // Fetch nearby venues hook with proper cleanup and error handling
+  const { venues, errorMsg, isLoading } = useFetchNearby(refreshTrigger);
 
-  // Handle errors from fetching venues
-  if (errorMsg) {
-    return <Layout><Text>Error: {errorMsg}</Text></Layout>;
-  }
-
-  // Refresh control
+  // Refresh control - MUST be before any conditional returns
   const onRefresh = () => {
     setRefreshing(true);
     setRefreshTrigger(prev => prev + 1); // Update the trigger to re-fetch data
   };
 
-  // Set refreshing to false when data has been fetched
+  // Set refreshing to false when data has been fetched - MUST be before any conditional returns
   useEffect(() => {
     if (refreshing) {
       setRefreshing(false);
     }
   }, [venues, errorMsg, refreshing]);
+
+  // Handle loading and error states - AFTER all hooks
+  if (errorMsg) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Layout style={styles.scrollContainer}>
+          <Text category="h6" style={{ textAlign: 'center', marginTop: 50 }}>
+            ⚠️ {errorMsg}
+          </Text>
+          <Text category="s1" style={{ textAlign: 'center', marginTop: 10 }}>
+            Please check your location settings and internet connection.
+          </Text>
+        </Layout>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -53,9 +75,16 @@ const HomeScreen = ({ navigation }) => {
       >
         <Layout style={{ flex: 1 }}>
           <PromoPager data={promos} />
-          {venues && venues.map((venue, index) => (
-            <VenueCard key={index}  venue={venue} navigation={navigation}/>
-          ))}
+          <Text category="h4" style={{ textAlign: 'center', margin: 20 }}>🍻 Nearby Venues</Text>
+          {venues && venues.length > 0 ? (
+            venues.map((venue, index) => (
+              <VenueCard key={index} venue={venue} navigation={navigation} />
+            ))
+          ) : (
+            <Text style={{ textAlign: 'center', margin: 20 }}>
+              {isLoading ? "🔍 Finding nearby venues..." : "No venues found"}
+            </Text>
+          )}
         </Layout>
       </ScrollView>
     </SafeAreaView>

@@ -1,7 +1,18 @@
+/**
+ * SafetyScreen Component
+ * Emergency and safety resources screen for nightlife safety
+ * Features: emergency contacts, current location display, safety service access
+ */
+
 import React from 'react';
 import { SafeAreaView, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { Layout, Text, Button, Icon, useTheme } from '@ui-kitten/components';
 
+/**
+ * SafetyScreen Component
+ * @param {Object} navigation - React Navigation object for screen transitions
+ * @returns {React.Component} Safety and emergency resources screen
+ */
 const SafetyScreen = ({ navigation }) => {
   // Get current theme and create styles with that theme
   const theme = useTheme();

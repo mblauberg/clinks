@@ -1,3 +1,9 @@
+/**
+ * AccountScreen Component
+ * User profile and account management screen with authentication handling
+ * Features: user profile display, navigation to account features, logout functionality
+ */
+
 import React, { useState, useEffect } from "react";
 import { StyleSheet, SafeAreaView, View } from "react-native";
 import { Layout, Text, Avatar, Icon, ListItem, useTheme } from "@ui-kitten/components";
@@ -5,6 +11,11 @@ import { signOut } from "firebase/auth";
 import { auth, fetchUserData } from "../services/Firebase";
 import SquareButton from "../components/SquareButton";
 
+/**
+ * AccountScreen Component
+ * @param {Object} navigation - React Navigation object for screen transitions
+ * @returns {React.Component} User account management screen
+ */
 const AccountScreen = ({ navigation }) => {
   const theme = useTheme();
   const styles = createStyles(theme);
@@ -13,12 +24,34 @@ const AccountScreen = ({ navigation }) => {
 
   useEffect(() => {
     if (auth.currentUser) {
-      fetchUserData(auth.currentUser.uid).then((data) => {
-        console.log("Fetched user data: ", data);
-        setUserData(data); // Set the user data state with the fetched data
-      });
+      fetchUserData(auth.currentUser.uid)
+        .then((data) => {
+          console.log("Fetched user data: ", data);
+          if (data) {
+            setUserData(data);
+          } else {
+            // No user document exists, create default user data
+            const defaultUserData = {
+              fullName: auth.currentUser.displayName || auth.currentUser.email?.split('@')[0] || "User",
+              email: auth.currentUser.email,
+              uid: auth.currentUser.uid
+            };
+            setUserData(defaultUserData);
+            console.log("Using default user data:", defaultUserData);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching user data:", error);
+          // Fallback to basic user info from auth
+          const fallbackUserData = {
+            fullName: auth.currentUser.displayName || auth.currentUser.email?.split('@')[0] || "User",
+            email: auth.currentUser.email,
+            uid: auth.currentUser.uid
+          };
+          setUserData(fallbackUserData);
+        });
     } else {
-      // User is not logged in, redirect to login screen or take any other action
+      // User is not logged in, redirect to login screen
       navigation.reset({ index: 0, routes: [{ name: "Login" }] });
     }
   }, [auth.currentUser]);
